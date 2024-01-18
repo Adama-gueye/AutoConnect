@@ -1,0 +1,1755 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Compte API",
+        "description": "API Documentation for managing user accounts",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/annoncesValides": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of all accepted Annonces",
+                "operationId": "0cfa3a6e3af916dfece8ae946c9f19c4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonceValides": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceInvalides": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of all rejected Annonces",
+                "operationId": "e3ea6365114b3e456d6e6a0e57bf6bb4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonceInvalides": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/index{id}": {
+            "post": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Update the state of a specific Annonce",
+                "operationId": "e36b8d11944ccb16e9459147e8c49b51",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Annonce",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceUserValides": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of all accepted Annonces for the authenticated user",
+                "operationId": "103660e5730f879b3245e69f243b1f20",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonceUserValides": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceUserInvalides": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of all rejected Annonces for the authenticated user",
+                "operationId": "1b145a19a71ace957abf13ca22bd2530",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonceUserInvalides": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonces{id}": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of Annonces for a specific Categorie",
+                "operationId": "617008fd7574b9a6d0a7ad4c8312d7df",
+                "parameters": [
+                    {
+                        "name": "categorieId",
+                        "in": "path",
+                        "description": "ID of the Categorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonces": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Categorie not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceStore": {
+            "post": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Create a new Annonce",
+                "operationId": "636caa5cebea2cabda14f5ae9f987bf6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnnonceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Annonce added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceShow{id}": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get details of a specific Annonce",
+                "operationId": "5c99b1985f3ceff28bc4ae21cc92d33d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Annonce",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonce": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        },
+                                        "commentaires": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Commentaire"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonces/Detail{id}": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get details of a specific Annonce",
+                "operationId": "67905234b77b5f346bf5720596d12408",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Annonce",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonce": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceUpdate{id}": {
+            "put": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Update a specific Annonce",
+                "operationId": "d671d472c5d68c53f9794ff1348c0f27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Annonce",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnnonceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Annonce updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/annonceDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Delete a specific Annonce",
+                "operationId": "e8c1678b39a538e331680a70c153e4de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Annonce to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate user and get JWT token",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT access token",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Bearer",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Token expiration time in seconds",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get the authenticated user",
+                "operationId": "b9abb1a7a74670a19c215c2c133f14d8",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log the user out (Invalidate the token)",
+                "operationId": "69281b12abb272c76871f19cb17ca563",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Logout message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh a token",
+                "operationId": "b2eae7a8032954d25b46c7ec6f489c68",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT access token",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Bearer",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Token expiration time in seconds",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/blocs": {
+            "get": {
+                "tags": [
+                    "Blocs"
+                ],
+                "summary": "Get a list of all Blocs",
+                "operationId": "8071303b49ab094f575ec71cc91e7cb3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "blocs": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Bloc"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blocStore": {
+            "post": {
+                "tags": [
+                    "Blocs"
+                ],
+                "summary": "Create a new Bloc",
+                "operationId": "d86c5f3fab995057fdc54b33c393ea43",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Bloc added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/blocUpdate{id}": {
+            "put": {
+                "tags": [
+                    "Blocs"
+                ],
+                "summary": "Update an existing Bloc",
+                "operationId": "016e97eeadb2a545c57c8940e4a03d05",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Bloc to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bloc updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Bloc not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/blocShow{id}": {
+            "get": {
+                "tags": [
+                    "Blocs"
+                ],
+                "summary": "Get details of a specific Bloc",
+                "operationId": "2d43496c7d120e8d0aa89c0426cddc9e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Bloc to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "blocs": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Bloc"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Bloc not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/blocDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Blocs"
+                ],
+                "summary": "Delete a specific Bloc",
+                "operationId": "08e37f66b4c33737898787ca964a0b2b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Bloc to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Bloc not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a list of all Categories",
+                "operationId": "0a3810ef08509327a6db442d3e4c4b73",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "categories": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Categorie"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/categorieStore": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new Categorie",
+                "operationId": "f683298625373815e746b4458d33febc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategorieRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categorie added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/categorie{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get details of a specific Categorie",
+                "operationId": "3f0a678c43cd385c0b16c8451cf90c9b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Categorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "categorie": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Categorie"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Categorie not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/categorieUpdate{id}": {
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update a specific Categorie",
+                "operationId": "f495401b87d4bb0b0fc4ff7a358ec287",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Categorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategorieRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categorie updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Categorie not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/categorieDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a specific Categorie",
+                "operationId": "ee0d5575b127792112f87a41f27989c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Categorie to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Categorie not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/commentaires": {
+            "get": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Get all comments",
+                "operationId": "ee4d918480e497cee636424744ecfebb",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Commentaire"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/commentaireStore{id}": {
+            "post": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Add a new comment to an annonce",
+                "operationId": "ed5e237ac5fbc33bff221648f206fa83",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the annonce",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "commentaire": {
+                                        "type": "string",
+                                        "example": "This is a comment"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comment added successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/commentairesDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Delete a comment",
+                "operationId": "8a4badc69aeed8c8b8cb63aa1d788559",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the comment",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Compte"
+                ],
+                "summary": "Register a new user account",
+                "operationId": "63a75efab396fd59b4fa437b61a98952",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "bjhscbjhcdbjhb  eie ehebjhe efbhebjhej"
+                                    },
+                                    "adresse": {
+                                        "type": "string",
+                                        "example": "Guédiawaye"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "acheteur"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User account created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Account created successfully",
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/messages": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get all messages",
+                "operationId": "9d5effa2cb648df85be0ea9741ffb457",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Add a new message",
+                "operationId": "db79bb7bcadfdb708e9f6c38ac928f4a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "This is a message"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message added successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/messages{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get a specific message by ID",
+                "operationId": "9a3fb3fb9801f417a4abe2deda6bb12a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/messageDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Delete a message",
+                "operationId": "6c81c8c51a6358f01e4831c1e6cdb005",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "bearerAuth"
+                    }
+                ]
+            }
+        },
+        "/api/newsletters": {
+            "get": {
+                "tags": [
+                    "Newsletters"
+                ],
+                "summary": "Get all newsletters",
+                "operationId": "9bc5403309a7d432fdc5d9b17e9f1fbc",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NewsLetter"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/newsletterStore": {
+            "post": {
+                "tags": [
+                    "Newsletters"
+                ],
+                "summary": "Subscribe to newsletter",
+                "operationId": "45981921c916baaf9cc6a54cde9b819b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Subscription successful"
+                    },
+                    "422": {
+                        "description": "Email already subscribed"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/newsletterDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Newsletters"
+                ],
+                "summary": "Unsubscribe from newsletter",
+                "operationId": "628b3a7fb4c2adb267ea6322a1563d4a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the newsletter subscription",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unsubscription successful"
+                    },
+                    "404": {
+                        "description": "Subscription not found"
+                    }
+                }
+            }
+        },
+        "/api/signalements": {
+            "get": {
+                "tags": [
+                    "Signalements"
+                ],
+                "summary": "Get all signalements",
+                "operationId": "91aae7b6c7f20bb9a25d8f826f47eda3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Signalement"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/signalementStore": {
+            "post": {
+                "tags": [
+                    "Signalements"
+                ],
+                "summary": "Submit signalement for an annonce",
+                "operationId": "523ea2652af13e61ef21231583152975",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the annonce being reported",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Signalement submitted successfully"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                }
+            }
+        },
+        "/api/signalementProprietaire": {
+            "get": {
+                "tags": [
+                    "Signalements"
+                ],
+                "summary": "Get signalements related to user's accepted annonces",
+                "operationId": "00437fd38be44ff1dde7f73c8b46d498",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Signalement"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No signalements found"
+                    }
+                }
+            }
+        },
+        "/api/signalementDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Signalements"
+                ],
+                "summary": "Delete a signalement",
+                "operationId": "d6dd3b77cc9cfd1596223bd2aa4f76eb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the signalement to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Signalement deleted successfully"
+                    },
+                    "404": {
+                        "description": "Signalement not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Commentaires",
+            "description": "Endpoints for managing comments"
+        },
+        {
+            "name": "Messages",
+            "description": "Endpoints for managing messages"
+        },
+        {
+            "name": "Newsletters",
+            "description": "Endpoints for managing newsletters"
+        },
+        {
+            "name": "Signalements",
+            "description": "Endpoints for managing signalements"
+        }
+    ]
+}
