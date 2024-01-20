@@ -18,7 +18,9 @@ class MessageController extends Controller
      *     path="/api/messages",
      *     summary="Get all messages",
      *     tags={"Messages"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -49,7 +51,9 @@ class MessageController extends Controller
      *     path="/api/messages",
      *     summary="Add a new message",
      *     tags={"Messages"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -86,7 +90,9 @@ class MessageController extends Controller
      *     path="/api/messages{id}",
      *     summary="Get a specific message by ID",
      *     tags={"Messages"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -130,7 +136,9 @@ class MessageController extends Controller
      *     path="/api/messageDestroy{id}",
      *     summary="Delete a message",
      *     tags={"Messages"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

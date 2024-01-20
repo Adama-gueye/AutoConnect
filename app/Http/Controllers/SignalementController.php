@@ -48,6 +48,9 @@ class SignalementController extends Controller
      *     path="/api/signalementStore",
      *     summary="Submit signalement for an annonce",
      *     tags={"Signalements"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *      },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

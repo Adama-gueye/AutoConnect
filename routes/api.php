@@ -50,10 +50,12 @@ Route::get('/annonces{id}', [AnnonceController::class, 'annoncesParCategorie']);
 Route::post('/newsLetterStore', [NewsLetterController::class, 'store']);
 Route::get('/blocs', [BlocController::class, 'index']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
+Route::post('/whatsap/{id}', [AnnonceController::class, 'redirigerWhatsApp'])->name("whatsapp.user");
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/annonceInvalides', [AnnonceController::class, 'annonceInvalides']);
+    Route::get('/annonceValidesByAdmin', [AnnonceController::class, 'annonceValides']);
     Route::patch('/index{id}', [AnnonceController::class, 'index']);
     Route::post('/categorieStore', [CategorieController::class, 'store']);
     Route::get('/categorieShow{id}', [CategorieController::class, 'show']);
@@ -63,7 +65,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::post('/blocStore', [BlocController::class, 'store']);
     Route::get('/blocShow{id}', [BlocController::class, 'show']);
     Route::patch('/blocUpdate{id}', [BlocController::class, 'update']);
-    Route::get('/blocDestroy', [BlocController::class, 'destroy']);
+    Route::delete('/blocDestroy{id}', [BlocController::class, 'destroy']);
     Route::get('/messages', [MessageController::class, 'index']);
     Route::get('/commentaires', [CommentaireController::class, 'index']);
     Route::get('/newsLetters', [NewsLetterController::class, 'index']);
@@ -72,6 +74,8 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::delete('/newsLetterDestroy{id}', [NewsLetterController::class, 'destroy']);
     Route::delete('/signalementDestroy{id}', [SignalementController::class, 'destroy']);
     Route::get('/signalements', [SignalementController::class, 'index']);
+    Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
+    Route::get('/listeAcheteur', [CompteController::class, 'listeAcheteur']);
     //desactiver un utilisateur, activer un utiliser
 });
 Route::middleware(['auth:api', 'role:acheteur'])->group(function () {

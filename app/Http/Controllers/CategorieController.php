@@ -20,7 +20,9 @@ class CategorieController extends Controller
      *     path="/api/categories",
      *     summary="Get a list of all Categories",
      *     tags={"Categories"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -63,7 +65,9 @@ class CategorieController extends Controller
      *     path="/api/categorieStore",
      *     summary="Create a new Categorie",
      *     tags={"Categories"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
@@ -93,7 +97,9 @@ class CategorieController extends Controller
      *     path="/api/categorie{id}",
      *     summary="Get details of a specific Categorie",
      *     tags={"Categories"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -131,11 +137,13 @@ class CategorieController extends Controller
     }
 
     /**
-     * @OA\Put(
+     * @OA\patch(
      *     path="/api/categorieUpdate{id}",
      *     summary="Update a specific Categorie",
      *     tags={"Categories"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -173,7 +181,9 @@ class CategorieController extends Controller
      *     path="/api/categorieDestroy{id}",
      *     summary="Delete a specific Categorie",
      *     tags={"Categories"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

@@ -3,7 +3,7 @@ services:
     # Mysql database container
     db:
         image: mysql
-        container_name: tutorial_db_laravel
+        container_name: autoconnect_mysql
         restart: always
         volumes:
             - db-data:/var/lib/mysql
@@ -15,7 +15,7 @@ services:
     # phpmyadmin container
     phpmyadmin:
         image: phpmyadmin
-        container_name: tutorial_phpmyadmin
+        container_name: autoconnect_phpmyadmin
         restart: always
         depends_on:
             - db
@@ -29,7 +29,7 @@ services:
     # laravel apache project container
     www:
         build: docker/php
-        container_name: tutorial_laravel
+        container_name: autoconnect_project
         ports:
           - "8741:80"
         volumes:

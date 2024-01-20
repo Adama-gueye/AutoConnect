@@ -48,7 +48,9 @@ class BlocController extends Controller
      *     path="/api/blocStore",
      *     summary="Create a new Bloc",
      *     tags={"Blocs"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -87,11 +89,13 @@ class BlocController extends Controller
         return response()->json('Bloc ajouté avec succès', 201);
     }
     /**
-     * @OA\Put(
+     * @OA\Patch(
      *     path="/api/blocUpdate{id}",
      *     summary="Update an existing Bloc",
      *     tags={"Blocs"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -154,7 +158,9 @@ class BlocController extends Controller
      *     path="/api/blocShow{id}",
      *     summary="Get details of a specific Bloc",
      *     tags={"Blocs"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -192,7 +198,9 @@ class BlocController extends Controller
      *     path="/api/blocDestroy{id}",
      *     summary="Delete a specific Bloc",
      *     tags={"Blocs"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

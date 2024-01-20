@@ -38,7 +38,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -75,18 +75,18 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
         },
         "/api/index{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "Annonces"
                 ],
                 "summary": "Update the state of a specific Annonce",
-                "operationId": "e36b8d11944ccb16e9459147e8c49b51",
+                "operationId": "379869cefa8197dc55292b85447346e9",
                 "parameters": [
                     {
                         "name": "id",
@@ -123,7 +123,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -160,7 +160,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -197,7 +197,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -248,7 +248,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -292,7 +292,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -352,7 +352,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -403,18 +403,18 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
         },
         "/api/annonceUpdate{id}": {
-            "put": {
+            "patch": {
                 "tags": [
                     "Annonces"
                 ],
                 "summary": "Update a specific Annonce",
-                "operationId": "d671d472c5d68c53f9794ff1348c0f27",
+                "operationId": "68a56cf90b7f64bd9f547a240b8b1351",
                 "parameters": [
                     {
                         "name": "id",
@@ -464,7 +464,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -515,7 +515,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -768,18 +768,18 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
         },
         "/api/blocUpdate{id}": {
-            "put": {
+            "patch": {
                 "tags": [
                     "Blocs"
                 ],
                 "summary": "Update an existing Bloc",
-                "operationId": "016e97eeadb2a545c57c8940e4a03d05",
+                "operationId": "f7b2145cf73bd36a18b0f924eb165f56",
                 "parameters": [
                     {
                         "name": "id",
@@ -840,7 +840,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -891,7 +891,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -942,7 +942,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -979,7 +979,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1023,7 +1023,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1074,18 +1074,18 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
         },
         "/api/categorieUpdate{id}": {
-            "put": {
+            "patch": {
                 "tags": [
                     "Categories"
                 ],
                 "summary": "Update a specific Categorie",
-                "operationId": "f495401b87d4bb0b0fc4ff7a358ec287",
+                "operationId": "c407bbd00b45b245d6058fcb429a9cca",
                 "parameters": [
                     {
                         "name": "id",
@@ -1132,7 +1132,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1180,7 +1180,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1212,7 +1212,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1261,7 +1261,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1294,7 +1294,81 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/listeProprietaire": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of all users with the 'proprietaire' role",
+                "operationId": "d7c56ca040757e3da1c7d2cafd26dcc3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "proprietaire": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/listeAcheteur": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of all users with the 'acheteur' role",
+                "operationId": "c2017de4dad8705a5fad294eb8b5ec9e",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "acheteur": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1405,7 +1479,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             },
@@ -1441,7 +1515,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1484,7 +1558,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1520,7 +1594,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1666,7 +1740,12 @@
                     "404": {
                         "description": "Annonce not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/signalementProprietaire": {

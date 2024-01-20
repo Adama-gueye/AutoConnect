@@ -18,6 +18,8 @@ use App\Models\Commentaire;
 use App\Models\Image;
 use App\Models\NewsLetter;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -29,7 +31,9 @@ class AnnonceController extends Controller
      *     path="/api/annoncesValides",
      *     summary="Get a list of all accepted Annonces",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -51,7 +55,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceInvalides",
      *     summary="Get a list of all rejected Annonces",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -70,11 +76,13 @@ class AnnonceController extends Controller
     }
 
         /**
-     * @OA\Post(
+     * @OA\Patch(
      *     path="/api/index{id}",
      *     summary="Update the state of a specific Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -143,7 +151,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceUserValides",
      *     summary="Get a list of all accepted Annonces for the authenticated user",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -167,7 +177,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceUserInvalides",
      *     summary="Get a list of all rejected Annonces for the authenticated user",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -185,13 +197,35 @@ class AnnonceController extends Controller
         return response()->json(compact('annonceUserInvalides'), 200);  
     }
 
+    public function redirigerWhatsApp($id)
+    {
+        try {
+            // Validation de l'ID comme étant numérique
+            if (!is_numeric($id)) {
+                throw new Exception('L\'ID doit être numérique.');
+            }
+
+            $user = User::findOrFail($id);
+            $numeroWhatsApp = $user->telephone;
+            $urlWhatsApp = "https://api.whatsapp.com/send?phone=$numeroWhatsApp";
+
+            return "sucess";
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('whatsapp.user'); // Utilisez le bon nom de route
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 
     /**
      * @OA\Get(
      *     path="/api/annonces{id}",
      *     summary="Get a list of Annonces for a specific Categorie",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="categorieId",
      *         in="path",
@@ -274,7 +308,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceStore",
      *     summary="Create a new Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/AnnonceRequest")
@@ -319,15 +355,15 @@ class AnnonceController extends Controller
         $annonce->save();
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $imageFile) {
-                $file= $imageFile;
                 $filename = date('YmdHi') . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
-                $file->move(public_path('public/images'), $filename);
+                $imageFile->move(public_path('public/images'), $filename);
                 $image = new Image();      
                 $image->url = $filename;
                 $image->annonce_id = $annonce->id;
                 $image->save();
             }
-        } 
+        }
+        
 
         return response()->json("Annonce ajoutée avec succès", 201);
     }
@@ -339,7 +375,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceShow{id}",
      *     summary="Get details of a specific Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -381,7 +419,9 @@ class AnnonceController extends Controller
      *     path="/api/annonces/Detail{id}",
      *     summary="Get details of a specific Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -421,11 +461,13 @@ class AnnonceController extends Controller
     }
 
     /**
-     * @OA\Put(
+     * @OA\Patch(
      *     path="/api/annonceUpdate{id}",
      *     summary="Update a specific Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -504,7 +546,9 @@ class AnnonceController extends Controller
      *     path="/api/annonceDestroy{id}",
      *     summary="Delete a specific Annonce",
      *     tags={"Annonces"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

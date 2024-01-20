@@ -17,6 +17,54 @@ use OpenApi\Annotations as OA;
 
 class CompteController extends Controller
 {
+
+        /**
+     * @OA\Get(
+     *     path="/api/listeProprietaire",
+     *     summary="Get a list of all users with the 'proprietaire' role",
+     *     tags={"Users"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="proprietaire", type="array", @OA\Items(ref="#/components/schemas/User"))
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
+    public function ListeProprietaire() {
+        $proprietaire = User::where('role', 'proprietaire')->get();
+        return response()->json(compact('proprietaire'), 200);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/listeAcheteur",
+     *     summary="Get a list of all users with the 'acheteur' role",
+     *     tags={"Users"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="acheteur", type="array", @OA\Items(ref="#/components/schemas/User"))
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized")
+     * )
+     */
+    public function ListeAcheteur() {
+        $acheteur = User::where('role', 'acheteur')->get();
+        return response()->json(compact('acheteur'), 200);
+    }
+
+
     /**
      * @OA\Post(
      *     path="/api/register",

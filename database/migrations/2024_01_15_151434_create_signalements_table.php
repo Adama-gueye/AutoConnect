@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('signalements', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->text('description');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('annonce_id');

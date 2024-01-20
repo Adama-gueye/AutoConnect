@@ -20,7 +20,9 @@ class CommentaireController extends Controller
      *     path="/api/commentaires",
      *     summary="Get all comments",
      *     tags={"Commentaires"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *        response=200,
      *        description="Successful operation",
@@ -52,7 +54,9 @@ class CommentaireController extends Controller
      *     path="/api/commentaireStore{id}",
      *     summary="Add a new comment to an annonce",
      *     tags={"Commentaires"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -123,7 +127,9 @@ class CommentaireController extends Controller
      *     path="/api/commentairesDestroy{id}",
      *     summary="Delete a comment",
      *     tags={"Commentaires"},
-     *     security={"bearerAuth"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
