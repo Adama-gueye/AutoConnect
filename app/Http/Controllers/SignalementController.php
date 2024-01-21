@@ -45,7 +45,7 @@ class SignalementController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/signalementStore",
+     *     path="/api/signalementStore/{id}",
      *     summary="Submit signalement for an annonce",
      *     tags={"Signalements"},
      *     security={
@@ -58,6 +58,12 @@ class SignalementController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="description", type="string")
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=201,
      *         description="Signalement submitted successfully"
@@ -65,20 +71,27 @@ class SignalementController extends Controller
      *     @OA\Response(response=404, description="Annonce not found")
      * )
      */
-    public function store($id)
+    public function store($id, Request $request)
     {
-    
+
         $user = Auth::user();
         $annonce = Annonce::find($id);
+
+        $request->validate([
+            'description' => 'required|string',
+        ]);
+
         $signalement = new Signalement([
+            'description' => $request->input('description'),
             'user_id' => $user->id,
             'annonce_id' => $annonce->id,
         ]);
-    
+
         $signalement->save();
-    
-        return response()->json('Votre signalement a été prise en compte', 201);
+
+        return response()->json('Votre signalement a été pris en compte', 201);
     }
+
 
     /**
      * Display the specified resource.

@@ -101,7 +101,7 @@ class CompteController extends Controller
             'prenom' => 'required|string',
             'telephone' => 'required|string',
             'adresse' => 'required|string',
-            'description' => 'required|string',
+           // 'description' => 'required|string',
            // 'image' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',

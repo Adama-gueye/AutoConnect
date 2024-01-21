@@ -48,7 +48,7 @@ class MessageController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/messages",
+     *     path="/api/messageStore",
      *     summary="Add a new message",
      *     tags={"Messages"},
      *     security={
@@ -87,7 +87,7 @@ class MessageController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/messages{id}",
+     *     path="/api/messageShow{id}",
      *     summary="Get a specific message by ID",
      *     tags={"Messages"},
      *     security={

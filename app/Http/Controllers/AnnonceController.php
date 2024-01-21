@@ -303,7 +303,7 @@ class AnnonceController extends Controller
         ];
     }
 
-      /**
+    /**
      * @OA\Post(
      *     path="/api/annonceStore",
      *     summary="Create a new Annonce",
@@ -313,7 +313,23 @@ class AnnonceController extends Controller
      *     },
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/AnnonceRequest")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="marque", type="string"),
+     *             @OA\Property(property="couleur", type="string"),
+     *             @OA\Property(property="image", type="string"),
+     *             @OA\Property(property="prix", type="integer"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="nbrePlace", type="integer"),
+     *             @OA\Property(property="localisation", type="string"),
+     *             @OA\Property(property="moteur", type="string"),
+     *             @OA\Property(property="annee", type="integer"),
+     *             @OA\Property(property="carburant", type="string"),
+     *             @OA\Property(property="carosserie", type="string"),
+     *             @OA\Property(property="transmission", type="string"),
+     *             @OA\Property(property="categorie_id", type="integer"),
+     *             @OA\Property(property="images", type="array", @OA\Items(type="file")),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -325,6 +341,7 @@ class AnnonceController extends Controller
      *     @OA\Response(response=401, description="Unauthorized")
      * )
      */
+
     public function store(Request $request)
     {
         $request->validate($this->rules(), $this->messages());
@@ -462,7 +479,7 @@ class AnnonceController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/annonceUpdate{id}",
+     *     path="/api/annonceUpdate/{id}",
      *     summary="Update a specific Annonce",
      *     tags={"Annonces"},
      *     security={
@@ -477,7 +494,23 @@ class AnnonceController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/AnnonceRequest")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="marque", type="string"),
+     *             @OA\Property(property="couleur", type="string"),
+     *             @OA\Property(property="image", type="string"),
+     *             @OA\Property(property="prix", type="integer"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="nbrePlace", type="integer"),
+     *             @OA\Property(property="localisation", type="string"),
+     *             @OA\Property(property="moteur", type="string"),
+     *             @OA\Property(property="annee", type="integer"),
+     *             @OA\Property(property="carburant", type="string"),
+     *             @OA\Property(property="carosserie", type="string"),
+     *             @OA\Property(property="transmission", type="string"),
+     *             @OA\Property(property="categorie_id", type="integer"),
+     *             @OA\Property(property="images", type="array", @OA\Items(type="file")),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -491,6 +524,7 @@ class AnnonceController extends Controller
      *     @OA\Response(response=404, description="Annonce not found")
      * )
      */
+
     public function update(Request $request,$id)
     {
        // $request->validate($this->rules(), $this->messages());
