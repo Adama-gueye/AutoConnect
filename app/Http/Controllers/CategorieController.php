@@ -1,9 +1,9 @@
 <?php
 /**
  * @OA\Info(
- *      title="Categorie API",
+ *      title="API Catégorie",
  *      version="1.0.0",
- *      description="API Documentation for managing Categories"
+ *      description="Documentation de l'API pour la gestion des catégories"
  * )
  */
 
@@ -15,23 +15,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CategorieController extends Controller
 {
-     /**
+    /**
      * @OA\Get(
      *     path="/api/categories",
-     *     summary="Get a list of all Categories",
-     *     tags={"Categories"},
+     *     summary="Obtenir la liste de toutes les catégories",
+     *     tags={"Catégories"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="categories", type="array", @OA\Items(ref="#/components/schemas/Categorie"))
      *         )
      *     ),
      * 
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function index()
@@ -41,7 +41,7 @@ class CategorieController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Afficher le formulaire de création d'une nouvelle ressource.
      */
     public function create()
     {
@@ -54,32 +54,34 @@ class CategorieController extends Controller
             'nom' => 'required',
         ];
     }
+    
     public function messages()
     {
         return [
-            'nom.required' => 'Desolé! veuilez renseigner le nom de la catégorie',
+            'nom.required' => 'Désolé! Veuillez renseigner le nom de la catégorie',
         ];
     }
+
     /**
      * @OA\Post(
      *     path="/api/categorieStore",
-     *     summary="Create a new Categorie",
-     *     tags={"Categories"},
+     *     summary="Créer une nouvelle catégorie",
+     *     tags={"Catégories"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
+     *         @OA\JsonContent(@OA\Property(property="nom", type="string"),)
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Categorie added successfully",
+     *         description="Catégorie ajoutée avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function store(Request $request)
@@ -89,14 +91,14 @@ class CategorieController extends Controller
         $categorie->nom = $request->nom;
         $categorie->save();
 
-        return response()->json("Catégorie enregistrer avec succes", 201);
+        return response()->json("Catégorie enregistrée avec succès", 201);
     }
 
     /**
      * @OA\Get(
-     *     path="/api/categorie{id}",
-     *     summary="Get details of a specific Categorie",
-     *     tags={"Categories"},
+     *     path="/api/categorieShow{id}",
+     *     summary="Obtenir les détails d'une catégorie spécifique",
+     *     tags={"Catégories"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
@@ -104,18 +106,18 @@ class CategorieController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Categorie",
+     *         description="ID de la catégorie",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="categorie", type="array", @OA\Items(ref="#/components/schemas/Categorie"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Categorie not found")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Catégorie non trouvée")
      * )
      */
     public function show($id)
@@ -124,12 +126,12 @@ class CategorieController extends Controller
         if ($categorie) {
             return response()->json(compact('categorie'), 200);
         } else {
-            return response()->json("Categorie non trouvée", 404);
+            return response()->json("Catégorie non trouvée", 404);
         }
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Afficher le formulaire d'édition de la ressource spécifiée.
      */
     public function edit(Categorie $categorie)
     {
@@ -139,8 +141,8 @@ class CategorieController extends Controller
     /**
      * @OA\patch(
      *     path="/api/categorieUpdate{id}",
-     *     summary="Update a specific Categorie",
-     *     tags={"Categories"},
+     *     summary="Mettre à jour une catégorie spécifique",
+     *     tags={"Catégories"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
@@ -148,39 +150,38 @@ class CategorieController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Categorie",
+     *         description="ID de la catégorie",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/CategorieRequest")
+     *         @OA\JsonContent(@OA\Property(property="nom", type="string"),)
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Categorie updated successfully",
+     *         description="Catégorie mise à jour avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Categorie not found")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Catégorie non trouvée")
      * )
      */
     public function update(Request $request, $id)
     {
-       // $request->validate($this->rules(), $this->messages());
         $categorie = Categorie::find($id);
         $categorie->nom = $request->nom;
         $categorie->save();
 
-        return response()->json("Catégorie modifier avec succes", 201);
+        return response()->json("Catégorie modifiée avec succès", 201);
     }
 
     /**
      * @OA\Delete(
      *     path="/api/categorieDestroy{id}",
-     *     summary="Delete a specific Categorie",
-     *     tags={"Categories"},
+     *     summary="Supprimer une catégorie spécifique",
+     *     tags={"Catégories"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
@@ -188,18 +189,18 @@ class CategorieController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Categorie to delete",
+     *         description="ID de la catégorie à supprimer",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully deleted",
+     *         description="Supprimé avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Categorie not found")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Catégorie non trouvée")
      * )
      */
     public function destroy($id)
@@ -207,9 +208,9 @@ class CategorieController extends Controller
         $categorie = Categorie::find($id);
         if ($categorie) {
             $categorie->delete();
-            return response()->json("success','Categorie supprimée avec success", 200);
+            return response()->json("Catégorie supprimée avec succès", 200);
         } else {
-            return response()->json("Categorie non trouvée");
+            return response()->json("Catégorie non trouvée");
         }
     }
 }

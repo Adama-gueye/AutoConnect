@@ -2,20 +2,20 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Compte API",
-        "description": "API Documentation for managing user accounts",
+        "description": "API Documentation pour la gestion des comptes utilisateurs",
         "version": "1.0.0"
     },
     "paths": {
-        "/api/annoncesValides": {
+        "/api/annonceValides": {
             "get": {
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Get a list of all accepted Annonces",
-                "operationId": "0cfa3a6e3af916dfece8ae946c9f19c4",
+                "summary": "Obtenir une liste de toutes les annonces acceptées",
+                "operationId": "da70e4c3b90eaffc535f17a71dd36094",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -33,14 +33,9 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/annonceInvalides": {
@@ -48,11 +43,11 @@
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Get a list of all rejected Annonces",
+                "summary": "Obtenir une liste de toutes les annonces refusées",
                 "operationId": "e3ea6365114b3e456d6e6a0e57bf6bb4",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -70,7 +65,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -80,18 +75,18 @@
                 ]
             }
         },
-        "/api/index{id}": {
+        "/api/updateEtataAnnonce{id}": {
             "patch": {
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Update the state of a specific Annonce",
-                "operationId": "379869cefa8197dc55292b85447346e9",
+                "summary": "Mettre à jour l'état d'une annonce spécifique",
+                "operationId": "ce460751b30c317db4f7ac59a504d960",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Annonce",
+                        "description": "ID de l'annonce",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -100,7 +95,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Operation successful",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -115,10 +110,10 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Annonce not found"
+                        "description": "Annonce non trouvée"
                     }
                 },
                 "security": [
@@ -133,11 +128,11 @@
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Get a list of all accepted Annonces for the authenticated user",
+                "summary": "Obtenir la liste de toutes les annonces acceptées pour l'utilisateur authentifié",
                 "operationId": "103660e5730f879b3245e69f243b1f20",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -155,7 +150,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -170,11 +165,11 @@
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Get a list of all rejected Annonces for the authenticated user",
+                "summary": "Obtenir la liste de toutes les annonces refusées pour l'utilisateur authentifié",
                 "operationId": "1b145a19a71ace957abf13ca22bd2530",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -192,7 +187,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -202,18 +197,18 @@
                 ]
             }
         },
-        "/api/annonces{id}": {
+        "/api/annoncesParCategorie{id}": {
             "get": {
                 "tags": [
                     "Annonces"
                 ],
-                "summary": "Get a list of Annonces for a specific Categorie",
-                "operationId": "617008fd7574b9a6d0a7ad4c8312d7df",
+                "summary": "Obtenir les annonces par catégorie",
+                "operationId": "106f98d6985aba752dd08ce9e9ebbe84",
                 "parameters": [
                     {
-                        "name": "categorieId",
+                        "name": "id",
                         "in": "path",
-                        "description": "ID of the Categorie",
+                        "description": "ID de la catégorie",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -222,7 +217,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -238,19 +233,37 @@
                                 }
                             }
                         }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "Categorie not found"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
+                }
+            }
+        },
+        "/api/annoncesMisesEnAvantParCategorie": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Obtenir les annonces mises en avant par catégorie",
+                "operationId": "6172b85fce66ade56b4e0694778f04cd",
+                "responses": {
+                    "200": {
+                        "description": "Opération réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "annonces": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Annonce"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                ]
+                }
             }
         },
         "/api/annonceStore": {
@@ -265,7 +278,57 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AnnonceRequest"
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "marque": {
+                                        "type": "string"
+                                    },
+                                    "couleur": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "prix": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "nbrePlace": {
+                                        "type": "integer"
+                                    },
+                                    "localisation": {
+                                        "type": "string"
+                                    },
+                                    "moteur": {
+                                        "type": "string"
+                                    },
+                                    "annee": {
+                                        "type": "integer"
+                                    },
+                                    "carburant": {
+                                        "type": "string"
+                                    },
+                                    "carosserie": {
+                                        "type": "string"
+                                    },
+                                    "transmission": {
+                                        "type": "string"
+                                    },
+                                    "categorie_id": {
+                                        "type": "integer"
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file"
+                                        }
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -357,13 +420,13 @@
                 ]
             }
         },
-        "/api/annonces/Detail{id}": {
+        "/api/annonceDetail{id}": {
             "get": {
                 "tags": [
                     "Annonces"
                 ],
                 "summary": "Get details of a specific Annonce",
-                "operationId": "67905234b77b5f346bf5720596d12408",
+                "operationId": "8263bccef311a332b79c3c3aeecb8e87",
                 "parameters": [
                     {
                         "name": "id",
@@ -431,7 +494,57 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AnnonceRequest"
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "marque": {
+                                        "type": "string"
+                                    },
+                                    "couleur": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "prix": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "nbrePlace": {
+                                        "type": "integer"
+                                    },
+                                    "localisation": {
+                                        "type": "string"
+                                    },
+                                    "moteur": {
+                                        "type": "string"
+                                    },
+                                    "annee": {
+                                        "type": "integer"
+                                    },
+                                    "carburant": {
+                                        "type": "string"
+                                    },
+                                    "carosserie": {
+                                        "type": "string"
+                                    },
+                                    "transmission": {
+                                        "type": "string"
+                                    },
+                                    "categorie_id": {
+                                        "type": "integer"
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file"
+                                        }
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -520,12 +633,63 @@
                 ]
             }
         },
+        "/api/annonceDestroyAdmin{id}": {
+            "delete": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Delete a specific Annonce",
+                "operationId": "47d6c9efb3775c9f354166de1c5f2179",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "l'id de l'annonce à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
-                "summary": "Authenticate user and get JWT token",
+                "summary": "Authentifier l'utilisateur et obtenir le jeton JWT",
                 "operationId": "8dcb70df1020986038d098cc08d05dae",
                 "requestBody": {
                     "required": true,
@@ -551,13 +715,13 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "access_token": {
-                                            "description": "JWT access token",
+                                            "description": "Jeton d'accès JWT",
                                             "type": "string"
                                         },
                                         "token_type": {
@@ -565,7 +729,7 @@
                                             "type": "string"
                                         },
                                         "expires_in": {
-                                            "description": "Token expiration time in seconds",
+                                            "description": "Durée d'expiration du jeton en secondes",
                                             "type": "integer"
                                         }
                                     },
@@ -575,21 +739,21 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 }
             }
         },
         "/api/auth/me": {
-            "get": {
+            "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
-                "summary": "Get the authenticated user",
-                "operationId": "b9abb1a7a74670a19c215c2c133f14d8",
+                "summary": "Obtenir l'utilisateur authentifié",
+                "operationId": "f0b15943f55143d36f606a2dbd1d2366",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -604,12 +768,12 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -617,19 +781,19 @@
         "/api/auth/logout": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
-                "summary": "Log the user out (Invalidate the token)",
+                "summary": "Déconnecter l'utilisateur (Invalider le jeton)",
                 "operationId": "69281b12abb272c76871f19cb17ca563",
                 "responses": {
                     "200": {
-                        "description": "Successfully logged out",
+                        "description": "Déconnexion réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
-                                            "description": "Logout message",
+                                            "description": "Message de déconnexion",
                                             "type": "string"
                                         }
                                     },
@@ -639,12 +803,12 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -652,19 +816,19 @@
         "/api/auth/refresh": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Authentification"
                 ],
-                "summary": "Refresh a token",
+                "summary": "Actualiser un jeton",
                 "operationId": "b2eae7a8032954d25b46c7ec6f489c68",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "access_token": {
-                                            "description": "JWT access token",
+                                            "description": "Jeton d'accès JWT",
                                             "type": "string"
                                         },
                                         "token_type": {
@@ -672,7 +836,7 @@
                                             "type": "string"
                                         },
                                         "expires_in": {
-                                            "description": "Token expiration time in seconds",
+                                            "description": "Durée d'expiration du jeton en secondes",
                                             "type": "integer"
                                         }
                                     },
@@ -682,12 +846,12 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
                     {
-                        "scalar": "bearerAuth"
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -697,11 +861,11 @@
                 "tags": [
                     "Blocs"
                 ],
-                "summary": "Get a list of all Blocs",
+                "summary": "Obtenir une liste de tous les blocs",
                 "operationId": "8071303b49ab094f575ec71cc91e7cb3",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -726,7 +890,7 @@
                 "tags": [
                     "Blocs"
                 ],
-                "summary": "Create a new Bloc",
+                "summary": "Créer un nouveau bloc",
                 "operationId": "d86c5f3fab995057fdc54b33c393ea43",
                 "requestBody": {
                     "required": true,
@@ -751,7 +915,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Bloc added successfully",
+                        "description": "Bloc ajouté avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -778,13 +942,13 @@
                 "tags": [
                     "Blocs"
                 ],
-                "summary": "Update an existing Bloc",
+                "summary": "Mettre à jour un bloc existant",
                 "operationId": "f7b2145cf73bd36a18b0f924eb165f56",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Bloc to update",
+                        "description": "ID du bloc à mettre à jour",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -814,7 +978,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Bloc updated successfully",
+                        "description": "Bloc mis à jour avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -829,13 +993,13 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Bloc not found"
+                        "description": "Bloc non trouvé"
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Interdit"
                     }
                 },
                 "security": [
@@ -850,13 +1014,13 @@
                 "tags": [
                     "Blocs"
                 ],
-                "summary": "Get details of a specific Bloc",
+                "summary": "Obtenir les détails d'un bloc spécifique",
                 "operationId": "2d43496c7d120e8d0aa89c0426cddc9e",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Bloc to retrieve",
+                        "description": "ID du bloc à récupérer",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -865,7 +1029,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -883,10 +1047,10 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Bloc not found"
+                        "description": "Bloc non trouvé"
                     }
                 },
                 "security": [
@@ -901,13 +1065,13 @@
                 "tags": [
                     "Blocs"
                 ],
-                "summary": "Delete a specific Bloc",
+                "summary": "Supprimer un bloc spécifique",
                 "operationId": "08e37f66b4c33737898787ca964a0b2b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Bloc to delete",
+                        "description": "ID du bloc à supprimer",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -916,7 +1080,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully deleted",
+                        "description": "Supprimé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -931,13 +1095,13 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Bloc not found"
+                        "description": "Bloc non trouvé"
                     },
                     "403": {
-                        "description": "Forbidden"
+                        "description": "Interdit"
                     }
                 },
                 "security": [
@@ -950,13 +1114,13 @@
         "/api/categories": {
             "get": {
                 "tags": [
-                    "Categories"
+                    "Catégories"
                 ],
-                "summary": "Get a list of all Categories",
+                "summary": "Obtenir la liste de toutes les catégories",
                 "operationId": "0a3810ef08509327a6db442d3e4c4b73",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -974,7 +1138,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -987,23 +1151,28 @@
         "/api/categorieStore": {
             "post": {
                 "tags": [
-                    "Categories"
+                    "Catégories"
                 ],
-                "summary": "Create a new Categorie",
+                "summary": "Créer une nouvelle catégorie",
                 "operationId": "f683298625373815e746b4458d33febc",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CategorieRequest"
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Categorie added successfully",
+                        "description": "Catégorie ajoutée avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1018,7 +1187,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1028,18 +1197,18 @@
                 ]
             }
         },
-        "/api/categorie{id}": {
+        "/api/categorieShow{id}": {
             "get": {
                 "tags": [
-                    "Categories"
+                    "Catégories"
                 ],
-                "summary": "Get details of a specific Categorie",
-                "operationId": "3f0a678c43cd385c0b16c8451cf90c9b",
+                "summary": "Obtenir les détails d'une catégorie spécifique",
+                "operationId": "6a58091d9e5084a2fa99222878a57cd7",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Categorie",
+                        "description": "ID de la catégorie",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1048,7 +1217,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1066,10 +1235,10 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Categorie not found"
+                        "description": "Catégorie non trouvée"
                     }
                 },
                 "security": [
@@ -1082,15 +1251,15 @@
         "/api/categorieUpdate{id}": {
             "patch": {
                 "tags": [
-                    "Categories"
+                    "Catégories"
                 ],
-                "summary": "Update a specific Categorie",
+                "summary": "Mettre à jour une catégorie spécifique",
                 "operationId": "c407bbd00b45b245d6058fcb429a9cca",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Categorie",
+                        "description": "ID de la catégorie",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1102,14 +1271,19 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CategorieRequest"
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Categorie updated successfully",
+                        "description": "Catégorie mise à jour avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1124,10 +1298,10 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Categorie not found"
+                        "description": "Catégorie non trouvée"
                     }
                 },
                 "security": [
@@ -1140,15 +1314,15 @@
         "/api/categorieDestroy{id}": {
             "delete": {
                 "tags": [
-                    "Categories"
+                    "Catégories"
                 ],
-                "summary": "Delete a specific Categorie",
+                "summary": "Supprimer une catégorie spécifique",
                 "operationId": "ee0d5575b127792112f87a41f27989c0",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the Categorie to delete",
+                        "description": "ID de la catégorie à supprimer",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1157,7 +1331,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully deleted",
+                        "description": "Supprimé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1172,10 +1346,10 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Categorie not found"
+                        "description": "Catégorie non trouvée"
                     }
                 },
                 "security": [
@@ -1190,11 +1364,11 @@
                 "tags": [
                     "Commentaires"
                 ],
-                "summary": "Get all comments",
+                "summary": "Obtenir tous les commentaires",
                 "operationId": "ee4d918480e497cee636424744ecfebb",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1207,7 +1381,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1222,13 +1396,13 @@
                 "tags": [
                     "Commentaires"
                 ],
-                "summary": "Add a new comment to an annonce",
+                "summary": "Ajouter un nouveau commentaire à une annonce",
                 "operationId": "ed5e237ac5fbc33bff221648f206fa83",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the annonce",
+                        "description": "ID de l'annonce",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1243,7 +1417,7 @@
                                 "properties": {
                                     "commentaire": {
                                         "type": "string",
-                                        "example": "This is a comment"
+                                        "example": "Ceci est un commentaire"
                                     }
                                 },
                                 "type": "object"
@@ -1253,10 +1427,10 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Comment added successfully"
+                        "description": "Commentaire ajouté avec succès"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1266,18 +1440,18 @@
                 ]
             }
         },
-        "/api/commentairesDestroy{id}": {
+        "/api/commentaireDestroy{id}": {
             "delete": {
                 "tags": [
                     "Commentaires"
                 ],
-                "summary": "Delete a comment",
-                "operationId": "8a4badc69aeed8c8b8cb63aa1d788559",
+                "summary": "Supprimer un commentaire",
+                "operationId": "34dca5a7cdff95a9c3c4e63c403d170f",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the comment",
+                        "description": "ID du commentaire",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1286,10 +1460,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Comment deleted successfully"
+                        "description": "Commentaire supprimé avec succès"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1304,11 +1478,11 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get a list of all users with the 'proprietaire' role",
+                "summary": "Obtenir une liste de tous les utilisateurs avec le rôle 'proprietaire'",
                 "operationId": "d7c56ca040757e3da1c7d2cafd26dcc3",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1326,7 +1500,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1341,11 +1515,11 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get a list of all users with the 'acheteur' role",
+                "summary": "Obtenir une liste de tous les utilisateurs avec le rôle 'acheteur'",
                 "operationId": "c2017de4dad8705a5fad294eb8b5ec9e",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1363,7 +1537,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     }
                 },
                 "security": [
@@ -1378,7 +1552,7 @@
                 "tags": [
                     "Compte"
                 ],
-                "summary": "Register a new user account",
+                "summary": "Enregistrer un nouveau compte utilisateur",
                 "operationId": "63a75efab396fd59b4fa437b61a98952",
                 "requestBody": {
                     "required": true,
@@ -1400,6 +1574,11 @@
                                         "example": "user@example.com"
                                     },
                                     "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "confirmation": {
                                         "type": "string",
                                         "format": "password",
                                         "example": "password"
@@ -1428,13 +1607,13 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User account created successfully",
+                        "description": "Compte utilisateur créé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
-                                            "description": "Account created successfully",
+                                            "description": "Compte créé avec succès",
                                             "type": "string"
                                         },
                                         "user": {
@@ -1447,57 +1626,73 @@
                         }
                     },
                     "401": {
-                        "description": "Validation Error"
+                        "description": "Erreur de validation"
                     }
                 }
             }
         },
-        "/api/messages": {
-            "get": {
+        "/api/acheteurUpdate{id}": {
+            "patch": {
                 "tags": [
-                    "Messages"
+                    "Compte"
                 ],
-                "summary": "Get all messages",
-                "operationId": "9d5effa2cb648df85be0ea9741ffb457",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Message"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
+                "summary": "Mettre à jour un compte utilisateur existant",
+                "operationId": "63f37a68102b8a0e025abc65b6705845",
+                "parameters": [
                     {
-                        "bearerAuth": []
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Messages"
                 ],
-                "summary": "Add a new message",
-                "operationId": "db79bb7bcadfdb708e9f6c38ac928f4a",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "message": {
+                                    "nom": {
                                         "type": "string",
-                                        "example": "This is a message"
+                                        "example": "John"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newpassword"
+                                    },
+                                    "confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newpassword"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "bjhscbjhcdbjhb eie ehebjhe efbhebjhej"
+                                    },
+                                    "adresse": {
+                                        "type": "string",
+                                        "example": "Guédiawaye"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "acheteur"
                                     }
                                 },
                                 "type": "object"
@@ -1507,10 +1702,26 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Message added successfully"
+                        "description": "Compte utilisateur modifié avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Compte modifié avec succès",
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Erreur de validation"
                     }
                 },
                 "security": [
@@ -1520,18 +1731,18 @@
                 ]
             }
         },
-        "/api/messages{id}": {
+        "/api/acheteurShow{id}": {
             "get": {
                 "tags": [
-                    "Messages"
+                    "Compte"
                 ],
-                "summary": "Get a specific message by ID",
-                "operationId": "9a3fb3fb9801f417a4abe2deda6bb12a",
+                "summary": "Obtenir les détails d'un utilisateur spécifique",
+                "operationId": "42b467bbd9c0d59eb8f96d5cc01775e4",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the message",
+                        "description": "ID de l'utilisateur",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1540,20 +1751,207 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Message"
+                                    "properties": {
+                                        "users": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/userDestroy{id}": {
+            "delete": {
+                "tags": [
+                    "Compte"
+                ],
+                "summary": "Supprimer un utilisateur spécifique",
+                "operationId": "026a3fe6a93007a524737b2732bfb8b0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur supprimé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/messages": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Obtenir tous les messages",
+                "operationId": "9d5effa2cb648df85be0ea9741ffb457",
+                "responses": {
+                    "200": {
+                        "description": "Opération réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "chemin/vers/votre/fichier.yaml#/components/schemas/Message"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/messageStore": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Ajouter un nouveau message",
+                "operationId": "4d6b3cf80959a63587ba2d1f0be1e89e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Ceci est un message"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "exemple@gmail.com"
+                                    },
+                                    "nomComplet": {
+                                        "type": "string",
+                                        "example": "Adama Gueye"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message ajouté avec succès"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/messageShow{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Obtenir un message spécifique par ID",
+                "operationId": "1e1f00bbe03ab2ea3b600e526029e5ab",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Opération réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Message"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Message not found"
+                        "description": "Message non trouvé"
                     }
                 },
                 "security": [
@@ -1568,13 +1966,13 @@
                 "tags": [
                     "Messages"
                 ],
-                "summary": "Delete a message",
+                "summary": "Supprimer un message",
                 "operationId": "6c81c8c51a6358f01e4831c1e6cdb005",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the message",
+                        "description": "ID du message",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1583,13 +1981,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Message deleted successfully"
+                        "description": "Message supprimé avec succès"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Non autorisé"
                     },
                     "404": {
-                        "description": "Message not found"
+                        "description": "Message non trouvé"
                     }
                 },
                 "security": [
@@ -1599,16 +1997,16 @@
                 ]
             }
         },
-        "/api/newsletters": {
+        "/api/newsLetters": {
             "get": {
                 "tags": [
                     "Newsletters"
                 ],
-                "summary": "Get all newsletters",
-                "operationId": "9bc5403309a7d432fdc5d9b17e9f1fbc",
+                "summary": "Obtenir toutes les newsletters",
+                "operationId": "3b269ae8bdcc95dcda5cc625ad587b26",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1620,16 +2018,21 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/newsletterStore": {
+        "/api/newsLetterStore": {
             "post": {
                 "tags": [
                     "Newsletters"
                 ],
-                "summary": "Subscribe to newsletter",
-                "operationId": "45981921c916baaf9cc6a54cde9b819b",
+                "summary": "S'abonner à la newsletter",
+                "operationId": "012572400c30cdd0ea79e772aab39a60",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1642,7 +2045,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "example@example.com"
+                                        "example": "exemple@exemple.com"
                                     }
                                 },
                                 "type": "object"
@@ -1652,29 +2055,29 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Subscription successful"
+                        "description": "Inscription réussie"
                     },
                     "422": {
-                        "description": "Email already subscribed"
+                        "description": "Email déjà inscrit"
                     },
                     "400": {
-                        "description": "Invalid input"
+                        "description": "Entrée non valide"
                     }
                 }
             }
         },
-        "/api/newsletterDestroy{id}": {
+        "/api/newsLetterDestroy{id}": {
             "delete": {
                 "tags": [
                     "Newsletters"
                 ],
-                "summary": "Unsubscribe from newsletter",
-                "operationId": "628b3a7fb4c2adb267ea6322a1563d4a",
+                "summary": "Se désabonner de la newsletter",
+                "operationId": "78f9a55b4c56263ef8490100ddc7849d",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the newsletter subscription",
+                        "description": "ID de l'abonnement à la newsletter",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1683,12 +2086,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Unsubscription successful"
+                        "description": "Désinscription réussie"
                     },
                     "404": {
-                        "description": "Subscription not found"
+                        "description": "Abonnement non trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/signalements": {
@@ -1696,11 +2104,11 @@
                 "tags": [
                     "Signalements"
                 ],
-                "summary": "Get all signalements",
+                "summary": "Obtenir tous les signalements",
                 "operationId": "91aae7b6c7f20bb9a25d8f826f47eda3",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1712,33 +2120,53 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/signalementStore": {
+        "/api/signalementStore{id}": {
             "post": {
                 "tags": [
                     "Signalements"
                 ],
-                "summary": "Submit signalement for an annonce",
-                "operationId": "523ea2652af13e61ef21231583152975",
+                "summary": "Soumettre un signalement pour une annonce",
+                "operationId": "9e33ed33546eee2982271a2e5e09d6f7",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the annonce being reported",
+                        "description": "ID de l'annonce signalée",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
-                        "description": "Signalement submitted successfully"
+                        "description": "Signalement soumis avec succès"
                     },
                     "404": {
-                        "description": "Annonce not found"
+                        "description": "Annonce non trouvée"
                     }
                 },
                 "security": [
@@ -1753,11 +2181,11 @@
                 "tags": [
                     "Signalements"
                 ],
-                "summary": "Get signalements related to user's accepted annonces",
+                "summary": "Obtenir les signalements liés aux annonces acceptées par l'utilisateur",
                 "operationId": "00437fd38be44ff1dde7f73c8b46d498",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Opération réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1770,9 +2198,14 @@
                         }
                     },
                     "404": {
-                        "description": "No signalements found"
+                        "description": "Aucun signalement trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/signalementDestroy{id}": {
@@ -1780,13 +2213,13 @@
                 "tags": [
                     "Signalements"
                 ],
-                "summary": "Delete a signalement",
+                "summary": "Supprimer un signalement",
                 "operationId": "d6dd3b77cc9cfd1596223bd2aa4f76eb",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the signalement to be deleted",
+                        "description": "ID du signalement à supprimer",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1795,12 +2228,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Signalement deleted successfully"
+                        "description": "Signalement supprimé avec succès"
                     },
                     "404": {
-                        "description": "Signalement not found"
+                        "description": "Signalement non trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -1816,19 +2254,19 @@
     "tags": [
         {
             "name": "Commentaires",
-            "description": "Endpoints for managing comments"
+            "description": "Endpoints pour la gestion des commentaire"
         },
         {
             "name": "Messages",
-            "description": "Endpoints for managing messages"
+            "description": "Endpoints pour la gestion des messages"
         },
         {
             "name": "Newsletters",
-            "description": "Endpoints for managing newsletters"
+            "description": "Endpoints pour la gestion des newsletters"
         },
         {
             "name": "Signalements",
-            "description": "Endpoints for managing signalements"
+            "description": "Endpoints pour la gestion des signalements"
         }
     ]
 }

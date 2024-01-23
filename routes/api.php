@@ -46,17 +46,18 @@ Route::group([
 });
 
 Route::get('/annonceValides', [AnnonceController::class, 'annonceValides']);
-Route::get('/annonces{id}', [AnnonceController::class, 'annoncesParCategorie']);
+Route::get('/annoncesParCategorie{id}', [AnnonceController::class, 'annoncesParCategorie']);
 Route::post('/newsLetterStore', [NewsLetterController::class, 'store']);
 Route::get('/blocs', [BlocController::class, 'index']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
-Route::post('/whatsap/{id}', [AnnonceController::class, 'redirigerWhatsApp'])->name("whatsapp.user");
+Route::get('/annoncesMisesEnAvantParCategorie', [AnnonceController::class, 'annoncesMisesEnAvantParCategorie']);
+Route::post('/messageStore', [MessageController::class, 'store']);
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/annonceInvalides', [AnnonceController::class, 'annonceInvalides']);
     Route::get('/annonceValidesByAdmin', [AnnonceController::class, 'annonceValides']);
-    Route::patch('/index{id}', [AnnonceController::class, 'index']);
+    Route::patch('/updateEtataAnnonce{id}', [AnnonceController::class, 'index']);
     Route::post('/categorieStore', [CategorieController::class, 'store']);
     Route::get('/categorieShow{id}', [CategorieController::class, 'show']);
     Route::patch('/categorieUpdate{id}', [CategorieController::class, 'update']);
@@ -76,12 +77,18 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/signalements', [SignalementController::class, 'index']);
     Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
     Route::get('/listeAcheteur', [CompteController::class, 'listeAcheteur']);
+    Route::delete('/userDestroy{id}', [CompteController::class, 'destroy']);
+    Route::delete('/annonceDestroyAdmin{id}', [AnnonceController::class, 'destroyAdmin']);
+    Route::get('/userShow{id}', [CompteController::class, 'show']);
+    Route::get('/messageShow{id}', [MessageController::class, 'show']);
     //desactiver un utilisateur, activer un utiliser
 });
 Route::middleware(['auth:api', 'role:acheteur'])->group(function () {
     Route::post('/commentaireStore{id}', [CommentaireController::class, 'store']);
-    Route::post('/messageStoreAcheteur', [MessageController::class, 'store']);
     Route::post('/signalementStore{id}', [SignalementController::class, 'store']);
+    Route::get('/acheteurShow{id}', [CompteController::class, 'show']);
+    Route::patch('/acheteurUpdate{id}', [CompteController::class, 'update']);
+    Route::post('/whatsap/{id}', [AnnonceController::class, 'redirigerWhatsApp'])->name("whatsapp.user");
 });
 Route::middleware(['auth:api', 'role:proprietaire'])->group(function () {
     Route::post('/annonceStore', [AnnonceController::class, 'store']);
@@ -91,6 +98,7 @@ Route::middleware(['auth:api', 'role:proprietaire'])->group(function () {
     Route::delete('/commentaireDestroyProp{id}', [CommentaireController::class, 'destroy']);
     Route::get('/annonceUserValides', [AnnonceController::class, 'annonceUserValide']);
     Route::get('/annonceUserInvalides', [AnnonceController::class, 'annonceUserInvalide']);
-    Route::post('/messageStore', [MessageController::class, 'store']);
     Route::get('/signalementProprietaire', [SignalementController::class, 'signalementProp']);
+    Route::get('/proprietaireShow{id}', [CompteController::class, 'show']);
+    Route::patch('/proprietaireUpdate{id}', [CompteController::class, 'update']);
 });

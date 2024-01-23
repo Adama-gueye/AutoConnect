@@ -10,9 +10,9 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
- *      title="Authentification API",
+ *      title="API d'authentification",
  *      version="1.0.0",
- *      description="API Documentation for user authentication"
+ *      description="Documentation de l'API pour l'authentification utilisateur"
  * )
  */
 
@@ -28,7 +28,7 @@ use OpenApi\Annotations as OA;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
+     * Crée une nouvelle instance du contrôleur d'authentification.
      *
      * @return void
      */
@@ -40,8 +40,8 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *     path="/api/auth/login",
-     *     summary="Authenticate user and get JWT token",
-     *     tags={"Authentication"},
+     *     summary="Authentifier l'utilisateur et obtenir le jeton JWT",
+     *     tags={"Authentification"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -51,14 +51,14 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
-     *             @OA\Property(property="access_token", type="string", description="JWT access token"),
+     *             @OA\Property(property="access_token", type="string", description="Jeton d'accès JWT"),
      *             @OA\Property(property="token_type", type="string", description="Bearer"),
-     *             @OA\Property(property="expires_in", type="integer", description="Token expiration time in seconds")
+     *             @OA\Property(property="expires_in", type="integer", description="Durée d'expiration du jeton en secondes")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function login()
@@ -66,26 +66,28 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Non autorisé'], 401);
         }
 
         return $this->respondWithToken($token);
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/auth/me",
-     *     summary="Get the authenticated user",
-     *     tags={"Authentication"},
-     *     security={"bearerAuth"},
+     *     summary="Obtenir l'utilisateur authentifié",
+     *     tags={"Authentification"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="user", type="object", ref="#/components/schemas/User")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function me()
@@ -96,50 +98,55 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *     path="/api/auth/logout",
-     *     summary="Log the user out (Invalidate the token)",
-     *     tags={"Authentication"},
-     *     security={"bearerAuth"},
+     *     summary="Déconnecter l'utilisateur (Invalider le jeton)",
+     *     tags={"Authentification"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully logged out",
+     *         description="Déconnexion réussie",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", description="Logout message")
+     *             @OA\Property(property="message", type="string", description="Message de déconnexion")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function logout()
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Déconnexion réussie']);
     }
 
     /**
      * @OA\Post(
      *     path="/api/auth/refresh",
-     *     summary="Refresh a token",
-     *     tags={"Authentication"},
-     *     security={"bearerAuth"},
+     *     summary="Actualiser un jeton",
+     *     tags={"Authentification"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
-     *             @OA\Property(property="access_token", type="string", description="JWT access token"),
+     *             @OA\Property(property="access_token", type="string", description="Jeton d'accès JWT"),
      *             @OA\Property(property="token_type", type="string", description="Bearer"),
-     *             @OA\Property(property="expires_in", type="integer", description="Token expiration time in seconds")
+     *             @OA\Property(property="expires_in", type="integer", description="Durée d'expiration du jeton en secondes")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
     }
+
     /**
-     * Get the token array structure.
+     * Obtenez la structure du tableau de jetons.
      *
      * @param  string $token
      * @return \Illuminate\Http\JsonResponse

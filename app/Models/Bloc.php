@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Bloc extends Model
 {
     use HasFactory;
+    protected $fillable = ['image', 'titre', 'description'];
 
-    public function user() 
-    {
-        return $this -> belongsTo(User::class);
-    }
 }

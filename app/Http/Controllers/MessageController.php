@@ -8,28 +8,27 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @OA\Tag(
  *     name="Messages",
- *     description="Endpoints for managing messages"
+ *     description="Endpoints pour la gestion des messages"
  * )
  */
 class MessageController extends Controller
 {
-     /**
+    /**
      * @OA\Get(
      *     path="/api/messages",
-     *     summary="Get all messages",
+     *     summary="Obtenir tous les messages",
      *     tags={"Messages"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Message")
-     *         )
+     *       @OA\Property(property="messages", type="array", @OA\Items(ref="chemin/vers/votre/fichier.yaml#/components/schemas/Message"))
+     *      )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function index()
@@ -49,7 +48,7 @@ class MessageController extends Controller
     /**
      * @OA\Post(
      *     path="/api/messageStore",
-     *     summary="Add a new message",
+     *     summary="Ajouter un nouveau message",
      *     tags={"Messages"},
      *     security={
      *         {"bearerAuth": {}}
@@ -57,38 +56,41 @@ class MessageController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="This is a message")
+     *             @OA\Property(property="message", type="string", example="Ceci est un message"),
+     *             @OA\Property(property="email", type="string", example="exemple@gmail.com"),
+     *             @OA\Property(property="nomComplet", type="string", example="Adama Gueye")
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Message added successfully",
+     *         description="Message ajouté avec succès",
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
-     * )
-     */
+     *     @OA\Response(response=401, description="Non autorisé")
+     * )*/
     public function store(Request $request)
     {
-        $request->validate([
-            'message' => 'required|string',
-        ]);
-    
-        $user = Auth::user();
-    
+        // $request->validate([
+        //     'message' => 'required|string',
+        //     'nomComplet' => 'required|string',
+        //     'email' => 'required|string',
+        // ]);
+
+
         $message = new Message([
             'message' => $request->input('message'),
-            'user_id' => $user->id,
+            'email' => $request->input('email'),
+            'nomComplet' => $request->input('nomComplet'),
         ]);
-    
+
         $message->save();
-    
-        return response()->json('Message enregistré avec succès, nous vous enverrons un amil pour la réponse', 201);
+
+        return response()->json('Message enregistré avec succès, nous vous enverrons un email pour la réponse', 201);
     }
 
     /**
      * @OA\Get(
      *     path="/api/messageShow{id}",
-     *     summary="Get a specific message by ID",
+     *     summary="Obtenir un message spécifique par ID",
      *     tags={"Messages"},
      *     security={
      *         {"bearerAuth": {}}
@@ -96,19 +98,20 @@ class MessageController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the message",
+     *         description="ID du message",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Message")
-     *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Message not found")
-     * )
-     */
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="messages", type="array", @OA\Items(ref="#/components/schemas/Message"))
+     *          )
+     *      ),
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Message non trouvé")
+     * )*/
     public function show($id)
     {
         $message = Message::find($id);
@@ -134,7 +137,7 @@ class MessageController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/messageDestroy{id}",
-     *     summary="Delete a message",
+     *     summary="Supprimer un message",
      *     tags={"Messages"},
      *     security={
      *         {"bearerAuth": {}}
@@ -142,27 +145,26 @@ class MessageController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the message",
+     *         description="ID du message",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Message deleted successfully",
+     *         description="Message supprimé avec succès",
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Message not found")
-     * )
-     */
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Message non trouvé")
+     * )*/
     public function destroy($id)
     {
         $message = Message::find($id);
 
         if ($message) {
             $message->delete();
-            return response()->json("success','Message supprimée avec success", 200);
+            return response()->json("success','Message supprimé avec succès", 200);
         } else {
-            return response()->json("Message non trouvée");
+            return response()->json("Message non trouvé");
         }
     }
 }

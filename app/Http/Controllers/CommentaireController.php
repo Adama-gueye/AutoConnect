@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Annonce;
 use App\Models\Commentaire;
-use App\Models\Commentaire as ModelsCommentaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 /**
  * @OA\Tag(
  *     name="Commentaires",
- *     description="Endpoints for managing comments"
+ *     description="Endpoints pour la gestion des commentaire"
  * )
  */
 class CommentaireController extends Controller
@@ -18,31 +18,31 @@ class CommentaireController extends Controller
     /**
      * @OA\Get(
      *     path="/api/commentaires",
-     *     summary="Get all comments",
+     *     summary="Obtenir tous les commentaires",
      *     tags={"Commentaires"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *        response=200,
-     *        description="Successful operation",
+     *        description="Opération réussie",
      *     @OA\JsonContent(
      *        type="array",
      *       @OA\Items(ref="#/components/schemas/Commentaire")
      *  )
      *),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function index()
     {
         $user = Auth::user();
         $commentaires = Commentaire::all();
-            return response()->json(compact('commentaires'), 200);
+        return response()->json(compact('commentaires'), 200);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Afficher le formulaire de création d'une nouvelle ressource.
      */
     public function create()
     {
@@ -52,7 +52,7 @@ class CommentaireController extends Controller
     /**
      * @OA\Post(
      *     path="/api/commentaireStore{id}",
-     *     summary="Add a new comment to an annonce",
+     *     summary="Ajouter un nouveau commentaire à une annonce",
      *     tags={"Commentaires"},
      *     security={
      *         {"bearerAuth": {}}
@@ -60,24 +60,24 @@ class CommentaireController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the annonce",
+     *         description="ID de l'annonce",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="commentaire", type="string", example="This is a comment")
+     *             @OA\Property(property="commentaire", type="string", example="Ceci est un commentaire")
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Comment added successfully",
+     *         description="Commentaire ajouté avec succès",
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
-    public function store(Request $request,$id)
+    public function store(Request $request, $id)
     {
         $request->validate([
             'commentaire' => 'required',
@@ -97,9 +97,8 @@ class CommentaireController extends Controller
         return response()->json('Commentaire ajouté avec succès', 201);
     }
 
-
     /**
-     * Display the specified resource.
+     * Afficher la ressource spécifiée.
      */
     public function show(Commentaire $commentaire)
     {
@@ -107,7 +106,7 @@ class CommentaireController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Afficher le formulaire d'édition de la ressource spécifiée.
      */
     public function edit(Commentaire $commentaire)
     {
@@ -115,7 +114,7 @@ class CommentaireController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Mettre à jour la ressource spécifiée dans le stockage.
      */
     public function update(Request $request, Commentaire $commentaire)
     {
@@ -124,8 +123,8 @@ class CommentaireController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/commentairesDestroy{id}",
-     *     summary="Delete a comment",
+     *     path="/api/commentaireDestroy{id}",
+     *     summary="Supprimer un commentaire",
      *     tags={"Commentaires"},
      *     security={
      *         {"bearerAuth": {}}
@@ -133,15 +132,15 @@ class CommentaireController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the comment",
+     *         description="ID du commentaire",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Comment deleted successfully",
+     *         description="Commentaire supprimé avec succès",
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function destroy($id)
@@ -150,9 +149,9 @@ class CommentaireController extends Controller
 
         if ($commentaire) {
             $commentaire->delete();
-            return response()->json("success','Commentaire supprimée avec success", 200);
+            return response()->json("success','Commentaire supprimé avec succès", 200);
         } else {
-            return response()->json("Commentaire non trouvée");
+            return response()->json("Commentaire non trouvé");
         }
     }
 }

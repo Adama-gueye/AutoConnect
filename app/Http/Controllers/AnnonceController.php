@@ -3,7 +3,7 @@
  * @OA\Info(
  *      title="Annonce API",
  *      version="1.0.0",
- *      description="API Documentation for managing Annonces"
+ *      description="API Documentation pour la gestion des Annonces"
  * )
  */
 
@@ -19,6 +19,7 @@ use App\Models\Image;
 use App\Models\NewsLetter;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,20 +29,17 @@ class AnnonceController extends Controller
 {
      /**
      * @OA\Get(
-     *     path="/api/annoncesValides",
-     *     summary="Get a list of all accepted Annonces",
+     *     path="/api/annonceValides",
+     *     summary="Obtenir une liste de toutes les annonces acceptées",
      *     tags={"Annonces"},
-     *     security={
-     *         {"bearerAuth": {}}
-     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="annonceValides", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function annonceValides()
@@ -53,19 +51,19 @@ class AnnonceController extends Controller
      /**
      * @OA\Get(
      *     path="/api/annonceInvalides",
-     *     summary="Get a list of all rejected Annonces",
+     *     summary="Obtenir une liste de toutes les annonces refusées",
      *     tags={"Annonces"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="annonceInvalides", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
 
@@ -75,10 +73,10 @@ class AnnonceController extends Controller
         return response()->json(compact('annonceInvalides'), 200);
     }
 
-        /**
+    /**
      * @OA\Patch(
-     *     path="/api/index{id}",
-     *     summary="Update the state of a specific Annonce",
+     *     path="/api/updateEtataAnnonce{id}",
+     *     summary="Mettre à jour l'état d'une annonce spécifique",
      *     tags={"Annonces"},
      *     security={
      *         {"bearerAuth": {}}
@@ -87,24 +85,28 @@ class AnnonceController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Annonce",
+     *         description="ID de l'annonce",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Operation successful",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Annonce not found")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Annonce non trouvée")
      * )
      */
+
     public function index($id)
     {
         $annonce = Annonce::find($id);
         $users = User::all();
+        if(!$annonce){
+            return response()->json("annonce non trouvé",404);
+        }
 
         if ($annonce->etat === "accepter") {
             // Mail pour l'utilisateur
@@ -149,21 +151,22 @@ class AnnonceController extends Controller
      /**
      * @OA\Get(
      *     path="/api/annonceUserValides",
-     *     summary="Get a list of all accepted Annonces for the authenticated user",
+     *     summary="Obtenir la liste de toutes les annonces acceptées pour l'utilisateur authentifié",
      *     tags={"Annonces"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="annonceUserValides", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
+
 
     public function annonceUserValide() 
     {
@@ -175,21 +178,22 @@ class AnnonceController extends Controller
     /**
      * @OA\Get(
      *     path="/api/annonceUserInvalides",
-     *     summary="Get a list of all rejected Annonces for the authenticated user",
+     *     summary="Obtenir la liste de toutes les annonces refusées pour l'utilisateur authentifié",
      *     tags={"Annonces"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="annonceUserInvalides", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
+
     public function annonceUserInvalide() 
     {
         $user = Auth::user();
@@ -209,7 +213,7 @@ class AnnonceController extends Controller
             $numeroWhatsApp = $user->telephone;
             $urlWhatsApp = "https://api.whatsapp.com/send?phone=$numeroWhatsApp";
 
-            return "sucess";
+            return $urlWhatsApp;
         } catch (ModelNotFoundException $e) {
             return redirect()->route('whatsapp.user'); // Utilisez le bon nom de route
         } catch (Exception $e) {
@@ -220,34 +224,71 @@ class AnnonceController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/annonces{id}",
-     *     summary="Get a list of Annonces for a specific Categorie",
+     *     path="/api/annoncesParCategorie{id}",
+     *     summary="Obtenir les annonces par catégorie",
      *     tags={"Annonces"},
-     *     security={
-     *         {"bearerAuth": {}}
-     *     },
      *     @OA\Parameter(
-     *         name="categorieId",
+     *         name="id",
      *         in="path",
+     *         description="ID de la catégorie",
      *         required=true,
-     *         description="ID of the Categorie",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="annonces", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Categorie not found")
+     *     @OA\Response(response=200, description="Aucune annonce trouvée avec cette catégorie"),
      * )
      */
+
     public function annoncesParCategorie($id)
     {
-        $annonces = Categorie::findOrFail($id)->annonces;
-            return response()->json(compact('annonces'), 200);
+    $categorie = Categorie::find($id);
+
+    if (!$categorie) {
+        return response()->json("Catégorie non trouvée", 200);
+    }
+
+    $annonces = $categorie->annonces;
+
+    if ($annonces->isEmpty()) {
+        return response()->json("Aucune annonce trouvée avec cette catégorie", 200);
+    }
+
+    return response()->json(compact('annonces'), 200);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/annoncesMisesEnAvantParCategorie",
+     *     summary="Obtenir les annonces mises en avant par catégorie",
+     *     tags={"Annonces"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="annonces", type="array", @OA\Items(ref="#/components/schemas/Annonce"))
+     *         )
+     *     ),
+     * )
+     */
+    public function annoncesMisesEnAvantParCategorie()
+    {
+        $categories = Categorie::all();
+
+        $annoncesMisesEnAvant = [];
+
+        foreach ($categories as $categorie) {
+            $annonces = $categorie->annonces()->where('etat', 'accepter')->take(3)->get();
+
+            $annoncesMisesEnAvant[$categorie->nom] = $annonces;
+        }
+
+        return response()->json(compact('annoncesMisesEnAvant'), 200);
     }
 
     /**
@@ -267,13 +308,13 @@ class AnnonceController extends Controller
             'image' => 'required',
             'prix' => 'required|numeric',
             'description' => 'required',
-            'nbrePlace' => 'required|integer',
+           // 'nbrePlace' => 'required|integer',
             'localisation' => 'required',
             'moteur' => 'required',
             'annee' => 'required|integer',
             'carburant' => 'required',
-            'carosserie' => 'required',
-            'transmission' => 'required',
+            //'carosserie' => 'required',
+            //'transmission' => 'required',
             'categorie_id' => 'required|exists:categories,id',
         ];
     }
@@ -288,15 +329,15 @@ class AnnonceController extends Controller
             'prix.required' => 'Désolé ! Veuillez renseigner le prix de l\'annonce',
             'prix.numeric' => 'Désolé ! Le prix doit être un nombre',
             'description.required' => 'Désolé ! Veuillez renseigner la description de l\'annonce',
-            'nbrePlace.required' => 'Désolé ! Veuillez renseigner le nombre de places',
+            //'nbrePlace.required' => 'Désolé ! Veuillez renseigner le nombre de places',
             'nbrePlace.integer' => 'Désolé ! Le nombre de places doit être un nombre entier',
             'localisation.required' => 'Désolé ! Veuillez renseigner la localisation de l\'annonce',
             'moteur.required' => 'Désolé ! Veuillez renseigner le type de moteur',
             'annee.required' => 'Désolé ! Veuillez renseigner l\'année de fabrication',
             'annee.integer' => 'Désolé ! L\'année de fabrication doit être un nombre entier',
             'carburant.required' => 'Désolé ! Veuillez renseigner le type de carburant',
-            'carosserie.required' => 'Désolé ! Veuillez renseigner le type de carrosserie',
-            'transmission.required' => 'Désolé ! Veuillez renseigner le type de transmission',
+           // 'carosserie.required' => 'Désolé ! Veuillez renseigner le type de carrosserie',
+           // 'transmission.required' => 'Désolé ! Veuillez renseigner le type de transmission',
             'etat.required' => 'Désolé ! Veuillez renseigner l\'état de l\'annonce',
             'categorie_id.required' => 'Désolé ! Veuillez renseigner la catégorie de l\'annonce',
             'categorie_id.exists' => 'Désolé ! La catégorie spécifiée n\'existe pas',
@@ -433,7 +474,7 @@ class AnnonceController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/annonces/Detail{id}",
+     *     path="/api/annonceDetail{id}",
      *     summary="Get details of a specific Annonce",
      *     tags={"Annonces"},
      *     security={
@@ -479,7 +520,7 @@ class AnnonceController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/annonceUpdate/{id}",
+     *     path="/api/annonceUpdate{id}",
      *     summary="Update a specific Annonce",
      *     tags={"Annonces"},
      *     security={
@@ -535,7 +576,7 @@ class AnnonceController extends Controller
         }
 
         if ($user->id !== $annonce->user_id) {
-            return response()->json('Vous n\'avez pas l\'autorisation de mettre à jour ce bloc', 403);
+            return response()->json('Vous n\'avez pas l\'autorisation de mettre à jour cette annonce', 403);
         }
         $annonce->nom = $request->input('nom');
         $annonce->marque = $request->input('marque');
@@ -606,11 +647,53 @@ class AnnonceController extends Controller
     public function destroy($id)
     {
         $annonce = Annonce::find($id);
+        $user = Auth::user();
 
+        if($user->id !== $annonce->user_id) {
+            return response()->json('Vous n\'avez pas l\'autorisation de suuprimer cette annonce', 403);
+        }elseif ($annonce) {
+            $annonce->delete();
+            return response()->json("success','Annonce supprimée avec success", 200);
+        }else {
+            return response()->json("Annonce non trouvée");
+        }
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/annonceDestroyAdmin{id}",
+     *     summary="Delete a specific Annonce",
+     *     tags={"Annonces"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="l'id de l'annonce à supprimer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successfully deleted",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Annonce not found")
+     * )
+     */
+
+     public function destroyAdmin($id)
+    {
+        $annonce = Annonce::find($id);
         if ($annonce) {
             $annonce->delete();
             return response()->json("success','Annonce supprimée avec success", 200);
-        } else {
+        }else {
             return response()->json("Annonce non trouvée");
         }
     }

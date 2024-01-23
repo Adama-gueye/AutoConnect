@@ -2,9 +2,9 @@
 
 /**
  * @OA\Info(
- *      title="Bloc API",
+ *      title="API Bloc",
  *      version="1.0.0",
- *      description="API Documentation for managing Blocs"
+ *      description="Documentation de l'API pour la gestion des Blocs"
  * )
  */
 namespace App\Http\Controllers;
@@ -18,11 +18,11 @@ class BlocController extends Controller
      /**
      * @OA\Get(
      *     path="/api/blocs",
-     *     summary="Get a list of all Blocs",
+     *     summary="Obtenir une liste de tous les blocs",
      *     tags={"Blocs"},
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="blocs", type="array", @OA\Items(ref="#/components/schemas/Bloc"))
      *         )
@@ -36,7 +36,7 @@ class BlocController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Affiche le formulaire de création d'une nouvelle ressource.
      */
     public function create()
     {
@@ -46,7 +46,7 @@ class BlocController extends Controller
     /**
      * @OA\Post(
      *     path="/api/blocStore",
-     *     summary="Create a new Bloc",
+     *     summary="Créer un nouveau bloc",
      *     tags={"Blocs"},
      *     security={
      *         {"bearerAuth": {}}
@@ -61,14 +61,14 @@ class BlocController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Bloc added successfully",
+     *         description="Bloc ajouté avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
      * )
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'image' => 'required|string',
@@ -76,22 +76,21 @@ class BlocController extends Controller
             'description' => 'required|string',
         ]);
 
-        $user = Auth::user();
         $bloc = new Bloc([
             'image' => $request->input('image'),
             'titre' => $request->input('titre'),
             'description' => $request->input('description'),
-            'user_id' => $user->id,
         ]);
 
         $bloc->save();
 
         return response()->json('Bloc ajouté avec succès', 201);
     }
+
     /**
      * @OA\Patch(
      *     path="/api/blocUpdate{id}",
-     *     summary="Update an existing Bloc",
+     *     summary="Mettre à jour un bloc existant",
      *     tags={"Blocs"},
      *     security={
      *         {"bearerAuth": {}}
@@ -100,7 +99,7 @@ class BlocController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Bloc to update",
+     *         description="ID du bloc à mettre à jour",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
@@ -113,17 +112,16 @@ class BlocController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Bloc updated successfully",
+     *         description="Bloc mis à jour avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Bloc not found"),
-     *     @OA\Response(response=403, description="Forbidden")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Bloc non trouvé"),
+     *     @OA\Response(response=403, description="Interdit")
      * )
      */
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -138,11 +136,6 @@ class BlocController extends Controller
         if (!$bloc) {
             return response()->json('Bloc non trouvé', 404);
         }
-
-        if ($user->id !== $bloc->user_id) {
-            return response()->json('Vous n\'avez pas l\'autorisation de mettre à jour ce bloc', 403);
-        }
-
         $bloc->image = $request->input('image');
         $bloc->titre = $request->input('titre');
         $bloc->description = $request->input('description');
@@ -151,12 +144,10 @@ class BlocController extends Controller
         return response()->json('Bloc mis à jour avec succès', 200);
     }
 
-
-    
     /**
      * @OA\Get(
      *     path="/api/blocShow{id}",
-     *     summary="Get details of a specific Bloc",
+     *     summary="Obtenir les détails d'un bloc spécifique",
      *     tags={"Blocs"},
      *     security={
      *         {"bearerAuth": {}}
@@ -165,18 +156,18 @@ class BlocController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Bloc to retrieve",
+     *         description="ID du bloc à récupérer",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="blocs", type="array", @OA\Items(ref="#/components/schemas/Bloc"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Bloc not found")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Bloc non trouvé")
      * )
      */
     public function show($id)
@@ -186,7 +177,7 @@ class BlocController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Affiche le formulaire d'édition de la ressource spécifiée.
      */
     public function edit(Bloc $bloc)
     {
@@ -196,7 +187,7 @@ class BlocController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/blocDestroy{id}",
-     *     summary="Delete a specific Bloc",
+     *     summary="Supprimer un bloc spécifique",
      *     tags={"Blocs"},
      *     security={
      *         {"bearerAuth": {}}
@@ -205,19 +196,19 @@ class BlocController extends Controller
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="ID of the Bloc to delete",
+     *         description="ID du bloc à supprimer",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully deleted",
+     *         description="Supprimé avec succès",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Bloc not found"),
-     *     @OA\Response(response=403, description="Forbidden")
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Bloc non trouvé"),
+     *     @OA\Response(response=403, description="Interdit")
      * )
      */
     public function destroy($id)
@@ -226,9 +217,9 @@ class BlocController extends Controller
 
         if ($bloc) {
             $bloc->delete();
-            return response()->json("success','Bloc supprimée avec success", 200);
+            return response()->json("success','Bloc supprimée avec succès", 200);
         } else {
-            return response()->json("Bloc non trouvée");
+            return response()->json("Bloc non trouvé");
         }
     }
 }

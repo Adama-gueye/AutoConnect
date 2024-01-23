@@ -10,7 +10,7 @@ class Signalement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','annonce_id'];//description
+    protected $fillable = ['description','user_id','annonce_id'];//description
 
     public function user() 
     {

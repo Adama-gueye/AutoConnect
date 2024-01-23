@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @OA\Tag(
  *     name="Signalements",
- *     description="Endpoints for managing signalements"
+ *     description="Endpoints pour la gestion des signalements"
  * )
  */
 class SignalementController extends Controller
@@ -17,11 +17,14 @@ class SignalementController extends Controller
     /**
      * @OA\Get(
      *     path="/api/signalements",
-     *     summary="Get all signalements",
+     *     summary="Obtenir tous les signalements",
      *     tags={"Signalements"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Signalement")
@@ -45,8 +48,8 @@ class SignalementController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/signalementStore/{id}",
-     *     summary="Submit signalement for an annonce",
+     *     path="/api/signalementStore{id}",
+     *     summary="Soumettre un signalement pour une annonce",
      *     tags={"Signalements"},
      *     security={
      *         {"bearerAuth": {}}
@@ -54,7 +57,7 @@ class SignalementController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the annonce being reported",
+     *         description="ID de l'annonce signalée",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
@@ -66,9 +69,9 @@ class SignalementController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Signalement submitted successfully"
+     *         description="Signalement soumis avec succès"
      *     ),
-     *     @OA\Response(response=404, description="Annonce not found")
+     *     @OA\Response(response=404, description="Annonce non trouvée")
      * )
      */
     public function store($id, Request $request)
@@ -104,17 +107,20 @@ class SignalementController extends Controller
     /**
      * @OA\Get(
      *     path="/api/signalementProprietaire",
-     *     summary="Get signalements related to user's accepted annonces",
+     *     summary="Obtenir les signalements liés aux annonces acceptées par l'utilisateur",
      *     tags={"Signalements"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Signalement")
      *         )
      *     ),
-     *     @OA\Response(response=404, description="No signalements found")
+     *     @OA\Response(response=404, description="Aucun signalement trouvé")
      * )
      */
     public function signalementProp()
@@ -147,20 +153,23 @@ class SignalementController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/signalementDestroy{id}",
-     *     summary="Delete a signalement",
+     *     summary="Supprimer un signalement",
      *     tags={"Signalements"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the signalement to be deleted",
+     *         description="ID du signalement à supprimer",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Signalement deleted successfully"
+     *         description="Signalement supprimé avec succès"
      *     ),
-     *     @OA\Response(response=404, description="Signalement not found")
+     *     @OA\Response(response=404, description="Signalement non trouvé")
      * )
      */
     public function destroy($id)
@@ -169,9 +178,9 @@ class SignalementController extends Controller
 
         if ($signalement) {
             $signalement->delete();
-            return response()->json("success','Signalement supprimée avec success", 200);
+            return response()->json("success','Signalement supprimé avec succès", 200);
         } else {
-            return response()->json("Signalement non trouvée");
+            return response()->json("Signalement non trouvé");
         }
     }
     

@@ -80,16 +80,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this -> hasMany(Signalement::class);
     }
-    public function Messages() 
-    {
-        return $this -> hasMany(HasMany::class);
-    }
     public function commentaires() 
     {
         return $this -> hasMany(Commentaire::class);
-    }
-    public function Blocs() 
-    {
-        return $this -> hasMany(Bloc::class);
     }
 }

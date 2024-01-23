@@ -7,19 +7,22 @@ use Illuminate\Http\Request;
 /**
  * @OA\Tag(
  *     name="Newsletters",
- *     description="Endpoints for managing newsletters"
+ *     description="Endpoints pour la gestion des newsletters"
  * )
  */
 class NewsLetterController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/newsletters",
-     *     summary="Get all newsletters",
+     *     path="/api/newsLetters",
+     *     summary="Obtenir toutes les newsletters",
      *     tags={"Newsletters"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/NewsLetter")
@@ -44,24 +47,23 @@ class NewsLetterController extends Controller
     
     /**
      * @OA\Post(
-     *     path="/api/newsletterStore",
-     *     summary="Subscribe to newsletter",
+     *     path="/api/newsLetterStore",
+     *     summary="S'abonner à la newsletter",
      *     tags={"Newsletters"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email"},
-     *             @OA\Property(property="email", type="string", format="email", example="example@example.com")
+     *             @OA\Property(property="email", type="string", format="email", example="exemple@exemple.com")
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Subscription successful"
+     *         description="Inscription réussie"
      *     ),
-     *     @OA\Response(response=422, description="Email already subscribed"),
-     *     @OA\Response(response=400, description="Invalid input")
-     * )
-     */
+     *     @OA\Response(response=422, description="Email déjà inscrit"),
+     *     @OA\Response(response=400, description="Entrée non valide")
+     * )*/
     public function store(Request $request)
     {
         $request->validate([
@@ -109,21 +111,24 @@ class NewsLetterController extends Controller
 
      /**
      * @OA\Delete(
-     *     path="/api/newsletterDestroy{id}",
-     *     summary="Unsubscribe from newsletter",
+     *     path="/api/newsLetterDestroy{id}",
+     *     summary="Se désabonner de la newsletter",
      *     tags={"Newsletters"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the newsletter subscription",
+     *         description="ID de l'abonnement à la newsletter",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Unsubscription successful"
+     *         description="Désinscription réussie"
      *     ),
-     *     @OA\Response(response=404, description="Subscription not found")
+     *     @OA\Response(response=404, description="Abonnement non trouvé")
      * )
      */
     public function destroy($id)
@@ -132,9 +137,9 @@ class NewsLetterController extends Controller
 
         if ($newsLetter) {
             $newsLetter->delete();
-            return response()->json("success','Mail supprimée avec success", 200);
+            return response()->json("success','Email supprimé avec succès", 200);
         } else {
-            return response()->json("Mail non trouvée");
+            return response()->json("Email non trouvé");
         }
     }
 }

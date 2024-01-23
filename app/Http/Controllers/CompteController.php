@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Annotations as OA;
 
@@ -11,29 +12,29 @@ use OpenApi\Annotations as OA;
  * @OA\Info(
  *      title="Compte API",
  *      version="1.0.0",
- *      description="API Documentation for managing user accounts"
+ *      description="API Documentation pour la gestion des comptes utilisateurs"
  * )
  */
 
 class CompteController extends Controller
 {
 
-        /**
+    /**
      * @OA\Get(
      *     path="/api/listeProprietaire",
-     *     summary="Get a list of all users with the 'proprietaire' role",
+     *     summary="Obtenir une liste de tous les utilisateurs avec le rôle 'proprietaire'",
      *     tags={"Users"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="proprietaire", type="array", @OA\Items(ref="#/components/schemas/User"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function ListeProprietaire() {
@@ -44,19 +45,19 @@ class CompteController extends Controller
     /**
      * @OA\Get(
      *     path="/api/listeAcheteur",
-     *     summary="Get a list of all users with the 'acheteur' role",
+     *     summary="Obtenir une liste de tous les utilisateurs avec le rôle 'acheteur'",
      *     tags={"Users"},
      *     security={
      *         {"bearerAuth": {}}
      *     },
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Opération réussie",
      *         @OA\JsonContent(
      *             @OA\Property(property="acheteur", type="array", @OA\Items(ref="#/components/schemas/User"))
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized")
+     *     @OA\Response(response=401, description="Non autorisé")
      * )
      */
     public function ListeAcheteur() {
@@ -68,7 +69,7 @@ class CompteController extends Controller
     /**
      * @OA\Post(
      *     path="/api/register",
-     *     summary="Register a new user account",
+     *     summary="Enregistrer un nouveau compte utilisateur",
      *     tags={"Compte"},
      *     @OA\RequestBody(
      *         required=true,
@@ -77,6 +78,7 @@ class CompteController extends Controller
      *             @OA\Property(property="prenom", type="string", example="Doe"),
      *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="password"),
+     *             @OA\Property(property="confirmation", type="string", format="password", example="password"),
      *             @OA\Property(property="telephone", type="string", example="123456789"),
      *             @OA\Property(property="description", type="string", example="bjhscbjhcdbjhb  eie ehebjhe efbhebjhej"),
      *             @OA\Property(property="adresse", type="string", example="Guédiawaye"),
@@ -85,13 +87,13 @@ class CompteController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User account created successfully",
+     *         description="Compte utilisateur créé avec succès",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", description="Account created successfully"),
+     *             @OA\Property(property="message", type="string", description="Compte créé avec succès"),
      *             @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Validation Error")
+     *     @OA\Response(response=401, description="Erreur de validation")
      * )
      */
    public function register(Request $request)
@@ -101,10 +103,9 @@ class CompteController extends Controller
             'prenom' => 'required|string',
             'telephone' => 'required|string',
             'adresse' => 'required|string',
-           // 'description' => 'required|string',
-           // 'image' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
+            'confirmation' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -121,8 +122,174 @@ class CompteController extends Controller
         $user->adresse = $request->adresse;
         $user->image = $request->image;
         $user->role = $request->role;
-        $user->save();
-
-        return response()->json(['message' => 'Account created successfully', 'user' => $user], 201);
+        if($request->password!==$request->confirmation){
+            return response()->json('mot de passe non identique');
+        }else{
+            $user->save();
+            return response()->json(['message' => 'Compte créé avec succès', 'user' => $user], 201);
+        }
+        
     }
+
+    /**
+     * @OA\Patch(
+     *     path="/api/acheteurUpdate{id}",
+     *     summary="Mettre à jour un compte utilisateur existant",
+     *     tags={"Compte"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de l'utilisateur",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nom", type="string", example="John"),
+     *             @OA\Property(property="prenom", type="string", example="Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="newpassword"),
+     *             @OA\Property(property="confirmation", type="string", format="password", example="newpassword"),
+     *             @OA\Property(property="telephone", type="string", example="123456789"),
+     *             @OA\Property(property="description", type="string", example="bjhscbjhcdbjhb eie ehebjhe efbhebjhej"),
+     *             @OA\Property(property="adresse", type="string", example="Guédiawaye"),
+     *             @OA\Property(property="role", type="string", example="acheteur")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Compte utilisateur modifié avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", description="Compte modifié avec succès"),
+     *             @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Erreur de validation")
+     * )
+     */
+    public function update(Request $request, $id)
+    {
+        
+
+        $utilisateur = User::find($id);
+        $user = Auth::user();
+
+        if (!$utilisateur) {
+            return response()->json('Utilisateur non trouvé', 404);
+        }elseif($user->id !== $utilisateur->id){
+            return response()->json('impossible de modifier');
+        }else{
+            $validator = Validator::make($request->all(), [
+                'nom' => 'required|string',
+                'prenom' => 'required|string',
+                'telephone' => 'required|string',
+                'adresse' => 'required|string',
+                'email' => 'required|email',
+                'password' => 'nullable|string|min:6',
+                'confirmation' => 'nullable|string', 
+               ]);
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()], 401);
+            }
+            $utilisateur->nom = $request->nom;
+            $utilisateur->prenom = $request->prenom;
+            $utilisateur->email = $request->email;
+            $utilisateur->password = bcrypt($request->password);
+            $utilisateur->telephone = $request->telephone;
+            $utilisateur->description = $request->description;
+            $utilisateur->adresse = $request->adresse;
+            $utilisateur->image = $request->image;
+            $utilisateur->role = $request->role;
+            if($request->password!==$request->confirmation){
+                return response()->json('mot de passe non identique');
+            }
+            $utilisateur->save();
+            return response()->json(['message' => 'Compte créé avec succès', 'user' => $utilisateur], 201);
+        }
+   }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/acheteurShow{id}",
+     *     summary="Obtenir les détails d'un utilisateur spécifique",
+     *     tags={"Compte"},
+     *     security={
+     *        {"bearerAuth": {}}
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de l'utilisateur",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="users", ref="#/components/schemas/User")
+     *         )
+     *     ),
+     *     @OA\Response(response=404, description="Utilisateur non trouvé"),
+     *     @OA\Response(response=401, description="Non autorisé")
+     * )
+     */
+    public function show($id)
+    {
+        $utilisateur = User::find($id);
+        $user = Auth::user();
+        if (!$utilisateur) {
+            return response()->json('Utilisateur non trouvé', 404);
+        }elseif($user->id !== $utilisateur->id){
+            return response()->json('Impossible de voir les infos de cette utilisateur', 404);
+        }else{
+            return response()->json(compact('utilisateur'), 200);
+        }
+
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/userDestroy{id}",
+     *     summary="Supprimer un utilisateur spécifique",
+     *     tags={"Compte"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de l'utilisateur",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Utilisateur supprimé avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=404, description="Utilisateur non trouvé"),
+     *     @OA\Response(response=401, description="Non autorisé")
+     * )
+     */
+    public function destroy($id)
+    {
+        $utilisateur = User::find($id);
+
+        if (!$utilisateur) {
+            return response()->json('Utilisateur non trouvé', 404);
+        }
+
+        $utilisateur->delete();
+
+        return response()->json('Utilisateur supprimé avec succès', 200);
+    }
+
 }
