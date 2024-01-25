@@ -201,26 +201,6 @@ class AnnonceController extends Controller
         return response()->json(compact('annonceUserInvalides'), 200);  
     }
 
-    public function redirigerWhatsApp($id)
-    {
-        try {
-            // Validation de l'ID comme étant numérique
-            if (!is_numeric($id)) {
-                throw new Exception('L\'ID doit être numérique.');
-            }
-
-            $user = User::findOrFail($id);
-            $numeroWhatsApp = $user->telephone;
-            $urlWhatsApp = "https://api.whatsapp.com/send?phone=$numeroWhatsApp";
-
-            return $urlWhatsApp;
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('whatsapp.user'); // Utilisez le bon nom de route
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
 
     /**
      * @OA\Get(

@@ -133,6 +133,7 @@ class Annonce extends TestCase
         $this->assertEquals(201, $response->getStatusCode());
 
     }
+    
 
     public function test_newsLetter(): void
     {
@@ -147,10 +148,9 @@ class Annonce extends TestCase
     }
     public function test_signalement(): void
     {
-        $acheteur = User::factory()->acheteur()->create();
+        $////acheteur = User::factory()->acheteur()->create();
     
-        $annonce = User::factory()->create();
-
+        $
         $this->actingAs($acheteur);
 
         $signalement = [

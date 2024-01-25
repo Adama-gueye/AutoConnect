@@ -88,7 +88,7 @@ Route::middleware(['auth:api', 'role:acheteur'])->group(function () {
     Route::post('/signalementStore{id}', [SignalementController::class, 'store']);
     Route::get('/acheteurShow{id}', [CompteController::class, 'show']);
     Route::patch('/acheteurUpdate{id}', [CompteController::class, 'update']);
-    Route::post('/whatsap/{id}', [AnnonceController::class, 'redirigerWhatsApp'])->name("whatsapp.user");
+    Route::post('/whatsap{id}', [AuthController::class, 'redirigerWhatsApp'])->name("whatsapp");
 });
 Route::middleware(['auth:api', 'role:proprietaire'])->group(function () {
     Route::post('/annonceStore', [AnnonceController::class, 'store']);

@@ -856,6 +856,46 @@
                 ]
             }
         },
+        "/api/whatsap{id}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "whatsap",
+                "operationId": "f39c86895104a89f3c36bd5ef2d3de5f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la whatsap",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Opération réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/blocs": {
             "get": {
                 "tags": [
