@@ -26,4 +26,16 @@ class Annonce extends Model
     {
         return $this->hasMany(Image::class);
     }
+    protected $fillable = [
+        'nom', 'marque', 'couleur', 'image', 'prix', 'description', 
+        'nbrePlace', 'localisation', 'moteur', 'annee', 'carburant', 
+        'carosserie', 'transmission', 'etat', 'user_id', 'categorie_id'
+    ];
+
+
+    public static function create(array $attributes = [])
+    {
+        return parent::query()->create($attributes);
+    }
+
 }

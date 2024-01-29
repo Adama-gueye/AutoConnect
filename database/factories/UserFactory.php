@@ -27,21 +27,13 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom' => $this->faker->word,
-            'marque' => $this->faker->word,
-            'couleur' => $this->faker->word,
-            'image' => $this->faker->imageUrl(),
-            'prix' => $this->faker->numberBetween(1000, 5000),
-            'description' => $this->faker->paragraph,
-            'carburant' => $this->faker->word,
-            'nbrePlace' => $this->faker->numberBetween(1, 7),
-            'localisation' => $this->faker->address,
-            'moteur' => $this->faker->word,
-            'annee' => 2024,
-            'transmission' => $this->faker->word,
-            'etat' => $this->faker->randomElement(['accepter', 'refuser']),
-            'user_id' => User::factory()->proprietaire(),
-            'categorie_id' => Categorie::factory(),
+            'nom' => $this->faker->lastName,
+            'prenom' => $this->faker->firstName,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password'),
+            'telephone' => $this->faker->phoneNumber,
+            'adresse' => $this->faker->address,
+           // 'role' => 'admin', // Assurez-vous d'ajuster le rôle en conséquence
         ];
     }
     
@@ -86,28 +78,6 @@ class UserFactory extends Factory
                 'adresse' => $this->faker->address,
                 'adresse' => $this->faker->sentence,
                 'role' => 'proprietaire',
-            ];
-        });
-    }
-
-    public function annonce()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'nom' => $this->faker->word,
-                'marque' => $this->faker->word,
-                'couleur' => $this->faker->word,
-                'image' => $this->faker->imageUrl(),
-                'prix' => $this->faker->numberBetween(1000, 5000),
-                'description' => $this->faker->paragraph,
-                'carburant' => $this->faker->word,
-                'nbrePlace' => $this->faker->numberBetween(1, 7),
-                'localisation' => $this->faker->address,
-                'moteur' => $this->faker->word,
-                'annee' => 2024,
-                'transmission' =>$this->faker->word,
-                'etat' => $this->faker->randomElement('refuser'),
-                'categorie_id' => 1,
             ];
         });
     }

@@ -3,14 +3,20 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\AnnonceController;
+use App\Mail\AnnonceAccepter;
+use App\Mail\AnnonceRejeter;
+use App\Models\Annonce;
+use App\Models\Bloc;
+use App\Models\Categorie;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
-class Annonce extends TestCase
+class TestUser extends TestCase
 {
     /**
      * A basic feature test example.
@@ -39,24 +45,40 @@ class Annonce extends TestCase
 
         $response->assertStatus(200);
     }
+
+    //AjoutAnnonce
+    public function test_add_annonce(): void
+    {
+        $prop = User::factory()->proprietaire()->create();
+
+        $this->actingAs($prop);
+
+        $annonce = Annonce::factory()->make(); // Utilisez make() pour obtenir une instance non persistante
+
+        $response = $this->json('POST', 'api/annonceStore', $annonce->toArray());
+
+        $response->assertStatus(201);
+
+    }
 //valider ou invalider une annonce
     public function test_index(): void
     {
         $admin = User::factory()->admin()->create();
-
         $this->actingAs($admin);
-    
-        $annonce = User::factory()->create();
-        $response = $this->json('PATCH', 'api/index' . $annonce->id);
+
+        $annonce = Annonce::factory()->make();
+
+        $response = $this->json('PATCH', 'api/updateEtataAnnonce' . $annonce->id);
 
         $response->assertStatus(201);
     }
 
 
+
 //duplication d'un email
     public function test_duplicate_email()
     {
-        $email = 'isseu@gmail.com';
+        $email = 'd@gmail.com';
 
         $user1 = User::factory()->acheteur()->create([
             'email' => $email,
@@ -74,12 +96,12 @@ class Annonce extends TestCase
     public function test_user_login(): void
     {
         $user = User::factory()->create([
-            'email' => 'die@example.com',
+            'email' => 'ngom@example.com',
             'password' => bcrypt('password'),
         ]);
 
         $response = $this->json('POST', 'api/auth/login', [
-            'email' => 'die@example.com',
+            'email' => 'ngom@example.com',
             'password' => 'password',
         ]);
 
@@ -87,35 +109,8 @@ class Annonce extends TestCase
 
         $response->assertJsonStructure(['access_token', 'token_type', 'expires_in']);
     }
-//AJout une annonce
-    public function test_ajout_annonce(): void
-    {
-        $prop = User::factory()->proprietaire()->create();
-        $this->actingAs($prop);
+    // Autres méthodes et relations...
 
-        $annonce = User::factory()->create();
-
-        $response = $this->json('POST', 'api/annonceStore', $annonce->toArray());
-
-        $response->assertStatus(201);
-    }
-
-    //ajout une commentaire
-    public function test_ajout_commentaire(): void
-    {
-        $acheteur = User::factory()->acheteur()->create();
-    
-            $annonce = User::factory()->create();
-
-        $this->actingAs($acheteur);
-        $commentaireData = [
-            'commentaire' => 'cvbn',
-            'user_id' => $acheteur->id,
-        ];
-
-        $response = $this->json('POST', 'api/commentaireStore' . $annonce->id, $commentaireData); 
-        $this->assertEquals(201, $response->getStatusCode());
-    }
 
 
     public function test_ajout_message(): void
@@ -125,10 +120,12 @@ class Annonce extends TestCase
         $this->actingAs($acheteur);
         $messageData = [
             'message' => 'cvbn',
+            'email' => 'bb@gmail.com',
+            'nomComplet' => 'Adama Gueye',
             'user_id' => $acheteur->id,
         ];
 
-        $response = $this->json('POST', 'api/messageStoreAcheteur', $messageData);
+        $response = $this->json('POST', 'api/messageStore', $messageData);
 
         $this->assertEquals(201, $response->getStatusCode());
 
@@ -138,7 +135,7 @@ class Annonce extends TestCase
     public function test_newsLetter(): void
     {
         $Data = [
-            'email' => 'wawa@gmail.com',
+            'email' => 'n@gmail.com',
         ];
 
         $response = $this->json('POST', 'api/newsLetterStore', $Data);
@@ -146,49 +143,67 @@ class Annonce extends TestCase
         $this->assertEquals(201, $response->getStatusCode());
 
     }
-    public function test_signalement(): void
+        public function test_signalement(): void
     {
-        $////acheteur = User::factory()->acheteur()->create();
-    
-        $
+        $acheteur = User::factory()->acheteur()->create();
         $this->actingAs($acheteur);
+
+        // Créez une catégorie
+      //  $categorie = Categorie::factory()->create();
+
+        // Créez une annonce avec la catégorie créée
+        $annonce = Annonce::factory()->create();
 
         $signalement = [
             'description' => 'slm slm',
             'user_id' => $acheteur->id,
         ];
 
-        $response = $this->json('POST', 'api/signalementStore'.$annonce->id, $signalement);
+        $response = $this->json('POST', 'api/signalementStore' . $annonce->id, $signalement);
 
         $this->assertEquals(201, $response->getStatusCode());
-
     }
+
+//ajout annonce
+
 //Supprimer une bloc
 
-    public function test_supprime_bloc() {
+    public function test_suppression_bloc()
+    {
         $admin = User::factory()->admin()->create();
-
         $this->actingAs($admin);
 
-        $response = $this->json('DELETE', 'api/blocDestroy1');
+        $bloc = Bloc::factory()->create();
 
-        $response->assertStatus(200);
+        $responseSuppression = $this->json('DELETE', "api/blocDestroy{$bloc->id}");
 
+        $responseSuppression->assertStatus(200);
+
+        $this->assertDatabaseMissing('blocs', ['id' => $bloc]);
     }
 
-    public function test_supprime_annonce() {
+
+        public function test_supprime_annonce()
+    {
         $prop = User::factory()->proprietaire()->create();
-    
-        $annonce = User::factory()->create();
+        $annonce = Annonce::factory()->create(['user_id' => $prop->id]);
+
         $this->actingAs($prop);
 
         if($annonce->user_id === $prop->id){
-            $response = $this->json('DELETE', 'api/annonceDestroy'.$annonce->id);
+            $response = $this->json('DELETE', 'api/annonceDestroy' . $annonce->id);
 
             $response->assertStatus(200);
-         }else 
-         echo "non";
 
+            $this->assertDatabaseMissing('annonces', ['id' => $annonce->id]);
+        }
+
+        
     }
+//ajout commentaire
+
+//listeBloc
+
+//véhiculeParCategorie
 
 }
