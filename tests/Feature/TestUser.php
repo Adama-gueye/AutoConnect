@@ -30,7 +30,7 @@ class TestUser extends TestCase
 //listes des annonces valide
     public function test_annonces(): void
     {
-        $response = $this->get('/api/annonceValides');
+        $response = $this->json('GET','/api/annonceValides');
 
         $response->assertStatus(200);
     }

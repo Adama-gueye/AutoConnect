@@ -28,7 +28,9 @@ class AnnonceFactory extends Factory
             'localisation' => $this->faker->address,
             'moteur' => $this->faker->word,
             'annee' => 2024,
+            'kilometrage' => $this->faker->word,
             'transmission' => $this->faker->word,
+            'climatisation' => "Oui",
             'etat' => 'accepter', // Changer l'état initial à 'accepter'
             'categorie_id' => $categorie->id,
             'user_id' => User::factory()->proprietaire()->create()->id,

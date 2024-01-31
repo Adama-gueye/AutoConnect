@@ -315,7 +315,13 @@
                                     "carosserie": {
                                         "type": "string"
                                     },
+                                    "kilomerage": {
+                                        "type": "string"
+                                    },
                                     "transmission": {
+                                        "type": "string"
+                                    },
+                                    "climatisation": {
                                         "type": "string"
                                     },
                                     "categorie_id": {
@@ -531,7 +537,13 @@
                                     "carosserie": {
                                         "type": "string"
                                     },
+                                    "kilomerage": {
+                                        "type": "string"
+                                    },
                                     "transmission": {
+                                        "type": "string"
+                                    },
+                                    "climatisation": {
                                         "type": "string"
                                     },
                                     "categorie_id": {

@@ -293,7 +293,7 @@ class AnnonceController extends Controller
             'moteur' => 'required',
             'annee' => 'required|integer',
             'carburant' => 'required',
-            //'carosserie' => 'required',
+            'kilometrage' => 'required',
             //'transmission' => 'required',
             'categorie_id' => 'required|exists:categories,id',
         ];
@@ -316,7 +316,7 @@ class AnnonceController extends Controller
             'annee.required' => 'Désolé ! Veuillez renseigner l\'année de fabrication',
             'annee.integer' => 'Désolé ! L\'année de fabrication doit être un nombre entier',
             'carburant.required' => 'Désolé ! Veuillez renseigner le type de carburant',
-           // 'carosserie.required' => 'Désolé ! Veuillez renseigner le type de carrosserie',
+            'kilometrage.required' => 'Désolé ! Veuillez renseigner le type de kilometrage',
            // 'transmission.required' => 'Désolé ! Veuillez renseigner le type de transmission',
             'etat.required' => 'Désolé ! Veuillez renseigner l\'état de l\'annonce',
             'categorie_id.required' => 'Désolé ! Veuillez renseigner la catégorie de l\'annonce',
@@ -347,7 +347,9 @@ class AnnonceController extends Controller
      *             @OA\Property(property="annee", type="integer"),
      *             @OA\Property(property="carburant", type="string"),
      *             @OA\Property(property="carosserie", type="string"),
+     *             @OA\Property(property="kilomerage", type="string"),
      *             @OA\Property(property="transmission", type="string"),
+     *             @OA\Property(property="climatisation", type="string"),
      *             @OA\Property(property="categorie_id", type="integer"),
      *             @OA\Property(property="images", type="array", @OA\Items(type="file")),
      *         )
@@ -365,13 +367,12 @@ class AnnonceController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules(), $this->messages());
+      //  $request->validate($this->rules(), $this->messages());
         $user = Auth::user();
         $annonce = new Annonce();
         $annonce->nom = $request->input('nom');
         $annonce->marque = $request->input('marque');
         $annonce->couleur = $request->input('couleur');
-        $annonce->image = $request->input('image');
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -386,7 +387,9 @@ class AnnonceController extends Controller
         $annonce->annee = $request->input('annee');
         $annonce->carburant = $request->input('carburant');
         $annonce->carosserie = $request->input('carosserie');
+        $annonce->kilometrage = $request->input('kilometrage');
         $annonce->transmission = $request->input('transmission');
+        $annonce->climatisation = $request->input('climatisation');
         $annonce->etat = "refuser";
         $annonce->categorie_id = $request->input('categorie_id');
         $annonce->user_id = $user->id;
@@ -394,7 +397,7 @@ class AnnonceController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $imageFile) {
                 $filename = date('YmdHi') . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
-                $imageFile->move(public_path('public/images'), $filename);
+                $imageFile->move(public_path('images'), $filename);
                 $image = new Image();      
                 $image->url = $filename;
                 $image->annonce_id = $annonce->id;
@@ -528,7 +531,9 @@ class AnnonceController extends Controller
      *             @OA\Property(property="annee", type="integer"),
      *             @OA\Property(property="carburant", type="string"),
      *             @OA\Property(property="carosserie", type="string"),
+     *             @OA\Property(property="kilomerage", type="string"),
      *             @OA\Property(property="transmission", type="string"),
+     *             @OA\Property(property="climatisation", type="string"),
      *             @OA\Property(property="categorie_id", type="integer"),
      *             @OA\Property(property="images", type="array", @OA\Items(type="file")),
      *         )
@@ -546,56 +551,80 @@ class AnnonceController extends Controller
      * )
      */
 
-    public function update(Request $request,$id)
-    {
-       // $request->validate($this->rules(), $this->messages());
-        $user = Auth::user();
-        $annonce = Annonce::find($id);
-        if (!$annonce) {
-            return response()->json('Annonce non trouvé', 404);
-        }
+     public function update(Request $request, $id)
+     {
+         $user = Auth::user();
+         $annonce = Annonce::find($id);
+     
+         if (!$annonce) {
+             return response()->json('Annonce non trouvée', 404);
+         }
+     
+         if ($user->id !== $annonce->user_id) {
+             return response()->json("Vous n'avez pas l'autorisation de mettre à jour cette annonce", 403);
+         }
+     
+         // Mise à jour des champs de l'annonce
+         $annonce->nom = $request->input('nom');
+         $annonce->marque = $request->input('marque');
+         $annonce->couleur = $request->input('couleur');
 
-        if ($user->id !== $annonce->user_id) {
-            return response()->json('Vous n\'avez pas l\'autorisation de mettre à jour cette annonce', 403);
-        }
-        $annonce->nom = $request->input('nom');
-        $annonce->marque = $request->input('marque');
-        $annonce->couleur = $request->input('couleur');
-        // $annonce->image = $request->input('image');
-        if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('public/images'), $filename);
-            $annonce['image']= $filename;
-        }
-        $annonce->prix = $request->input('prix');
-        $annonce->description = $request->input('description');
-        $annonce->nbrePlace = $request->input('nbrePlace');
-        $annonce->localisation = $request->input('localisation');
-        $annonce->moteur = $request->input('moteur');
-        $annonce->annee = $request->input('annee');
-        $annonce->carburant = $request->input('carburant');
-        $annonce->carosserie = $request->input('carosserie');
-        $annonce->transmission = $request->input('transmission');
-        $annonce->etat = "refuser";
-        $annonce->categorie_id = $request->input('categorie_id');
-        $annonce->user_id = $user->id;
-        $annonce->save();
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $imageFile) {
-                $file= $imageFile;
-                $filename = date('YmdHi') . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
-                $file->move(public_path('public/images'), $filename);
-                $image = new Image();      
-                $image->url = $filename;
-                $image->annonce_id = $annonce->id;
-                $image->save();
+        if ($request->file('image')) {
+            if ($annonce->image) {
+                $oldImagePath = public_path('images/' . $annonce->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
             }
+    
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('public/images'), $filename);
+            $annonce->image = $filename;
         }
-
-        return response()->json("Annonce modifiée avec succès", 201);
-    }
-
+     
+         $annonce->prix = $request->input('prix');
+         $annonce->description = $request->input('description');
+         $annonce->nbrePlace = $request->input('nbrePlace');
+         $annonce->localisation = $request->input('localisation');
+         $annonce->moteur = $request->input('moteur');
+         $annonce->annee = $request->input('annee');
+         $annonce->carburant = $request->input('carburant');
+         $annonce->carosserie = $request->input('carosserie');
+         $annonce->kilometrage = $request->input('kilometrage');
+         $annonce->transmission = $request->input('transmission');
+         $annonce->climatisation = $request->input('climatisation');
+         $annonce->etat = "refuser";
+         $annonce->categorie_id = $request->input('categorie_id');
+         $annonce->user_id = $user->id;
+         $annonce->save();
+     
+         // Mise à jour des images associées à l'annonce
+         if ($request->hasFile('images')) {
+             foreach ($request->file('images') as $imageFile) {
+                 $file = $imageFile;
+                 $filename = date('YmdHi') . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
+                 $file->move(public_path('public/images'), $filename);
+     
+                 // Supprimer l'ancienne image si elle existe
+                 if ($annonce->images->isNotEmpty()) {
+                     $oldImagePath = public_path('public/images/' . $annonce->images[0]->url);
+                     if (file_exists($oldImagePath)) {
+                         unlink($oldImagePath);
+                     }
+                 }
+     
+                 // Mettre à jour l'image associée
+                 $image = new Image();
+                 $image->url = $filename;
+                 $image->annonce_id = $annonce->id;
+                 $image->save();
+             }
+         }
+     
+         return response()->json('Annonce modifiée avec succès', 200);
+     }
+     
      /**
      * @OA\Delete(
      *     path="/api/annonceDestroy{id}",
@@ -632,6 +661,12 @@ class AnnonceController extends Controller
         if($user->id !== $annonce->user_id) {
             return response()->json('Vous n\'avez pas l\'autorisation de suuprimer cette annonce', 403);
         }elseif ($annonce) {
+            if ($annonce->image) {
+                $imagePath = public_path('images/' . $annonce->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             $annonce->delete();
             return response()->json("success','Annonce supprimée avec success", 200);
         }else {
@@ -671,6 +706,12 @@ class AnnonceController extends Controller
     {
         $annonce = Annonce::find($id);
         if ($annonce) {
+            if ($annonce->image) {
+                $imagePath = public_path('images/' . $annonce->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             $annonce->delete();
             return response()->json("success','Annonce supprimée avec success", 200);
         }else {

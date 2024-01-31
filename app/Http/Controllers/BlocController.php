@@ -70,18 +70,21 @@ class BlocController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'required|string',
-            'titre' => 'required|string',
-            'description' => 'required|string',
-        ]);
+        // $request->validate([
+        //     'image' => 'required|string',
+        //     'titre' => 'required|string',
+        //     'description' => 'required|string',
+        // ]);
 
-        $bloc = new Bloc([
-            'image' => $request->input('image'),
-            'titre' => $request->input('titre'),
-            'description' => $request->input('description'),
-        ]);
-
+        $bloc = new Bloc();
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $bloc['image']= $filename;
+        }
+        $bloc->titre = $request->input('titre');
+        $bloc->description = $request->input('description');
         $bloc->save();
 
         return response()->json('Bloc ajouté avec succès', 201);
@@ -124,24 +127,32 @@ class BlocController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'image' => 'required|string',
-            'titre' => 'required|string',
-            'description' => 'required|string',
-        ]);
+    $user = Auth::user();
+    $bloc = Bloc::find($id);
 
-        $user = Auth::user();
-        $bloc = Bloc::find($id);
+    if (!$bloc) {
+        return response()->json('Bloc non trouvé', 404);
+    }
 
-        if (!$bloc) {
-            return response()->json('Bloc non trouvé', 404);
+    if ($request->file('image')) {
+        if ($bloc->image) {
+            $oldImagePath = public_path('images/' . $bloc->image);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
         }
-        $bloc->image = $request->input('image');
-        $bloc->titre = $request->input('titre');
-        $bloc->description = $request->input('description');
-        $bloc->save();
 
-        return response()->json('Bloc mis à jour avec succès', 200);
+        $file = $request->file('image');
+        $filename = date('YmdHi') . $file->getClientOriginalName();
+        $file->move(public_path('images'), $filename);
+        $bloc->image = $filename;
+    }
+
+    $bloc->titre = $request->input('titre');
+    $bloc->description = $request->input('description');
+    $bloc->save();
+
+    return response()->json('Bloc mis à jour avec succès', 200);
     }
 
     /**
@@ -216,10 +227,18 @@ class BlocController extends Controller
         $bloc = Bloc::find($id);
 
         if ($bloc) {
+            if ($bloc->image) {
+                $imagePath = public_path('images/' . $bloc->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
             $bloc->delete();
-            return response()->json("success','Bloc supprimée avec succès", 200);
+            return response()->json("Bloc supprimé avec succès", 200);
         } else {
-            return response()->json("Bloc non trouvé");
+            return response()->json("Bloc non trouvé", 404);
         }
     }
+
 }
