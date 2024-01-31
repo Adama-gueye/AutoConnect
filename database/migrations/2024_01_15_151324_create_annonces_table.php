@@ -28,6 +28,10 @@ return new class extends Migration
             $table->string("carosserie")->nullable();
             $table->string("transmission")->nullable();
             $table->enum("climatisation",['Oui','Non'])->nullable();
+            $table->string("image1")->nullable();
+            $table->string("image2")->nullable();
+            $table->string("image3")->nullable();
+            $table->string("image4")->nullable();
             $table->enum("etat",["accepter","refuser"])->default("refuser");
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 

@@ -390,6 +390,27 @@ class AnnonceController extends Controller
         $annonce->kilometrage = $request->input('kilometrage');
         $annonce->transmission = $request->input('transmission');
         $annonce->climatisation = $request->input('climatisation');
+        if($request->file('image1')){
+            $file= $request->file('image1');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image1']= $filename;
+        }if($request->file('image2')){
+            $file= $request->file('image2');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image2']= $filename;
+        }if($request->file('image3')){
+            $file= $request->file('image3');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image3']= $filename;
+        }if($request->file('image4')){
+            $file= $request->file('image4');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image4']= $filename;
+        }
         $annonce->etat = "refuser";
         $annonce->categorie_id = $request->input('categorie_id');
         $annonce->user_id = $user->id;
@@ -594,6 +615,27 @@ class AnnonceController extends Controller
          $annonce->kilometrage = $request->input('kilometrage');
          $annonce->transmission = $request->input('transmission');
          $annonce->climatisation = $request->input('climatisation');
+         if($request->file('image1')){
+            $file= $request->file('image1');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image1']= $filename;
+        }if($request->file('image2')){
+            $file= $request->file('image2');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image2']= $filename;
+        }if($request->file('image3')){
+            $file= $request->file('image3');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image3']= $filename;
+        }if($request->file('image4')){
+            $file= $request->file('image4');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $annonce['image4']= $filename;
+        }
          $annonce->etat = "refuser";
          $annonce->categorie_id = $request->input('categorie_id');
          $annonce->user_id = $user->id;
