@@ -481,9 +481,6 @@ class AnnonceController extends Controller
      *     path="/api/annonceDetail{id}",
      *     summary="Get details of a specific Annonce",
      *     tags={"Annonces"},
-     *     security={
-     *         {"bearerAuth": {}}
-     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

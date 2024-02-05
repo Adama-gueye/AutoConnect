@@ -52,6 +52,8 @@ Route::get('/blocs', [BlocController::class, 'index']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
 Route::get('/annoncesMisesEnAvantParCategorie', [AnnonceController::class, 'annoncesMisesEnAvantParCategorie']);
 Route::post('/messageStore', [MessageController::class, 'store']);
+Route::get('/blocShow{id}', [BlocController::class, 'show']);
+Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
@@ -64,7 +66,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::delete('/categorieDestroy{id}', [CategorieController::class, 'destroy']);
     Route::get('/categories', [CategorieController::class, 'index']);
     Route::post('/blocStore', [BlocController::class, 'store']);
-    Route::get('/blocShow{id}', [BlocController::class, 'show']);
     Route::patch('/blocUpdate{id}', [BlocController::class, 'update']);
     Route::delete('/blocDestroy{id}', [BlocController::class, 'destroy']);
     Route::get('/messages', [MessageController::class, 'index']);
