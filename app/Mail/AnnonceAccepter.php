@@ -38,7 +38,7 @@ class AnnonceAccepter extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'annonce',
+            view: 'annonceAccepter',
         );
     }
 
