@@ -757,4 +757,49 @@ class AnnonceController extends Controller
             return response()->json("Annonce non trouvée");
         }
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/whatsap{id}",
+     *     summary="whatsap",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la whatsap",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="users", type="array", @OA\Items(ref="#/components/schemas/User"))
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Aucune annonce trouvée avec cette catégorie"),
+     * )
+     */
+
+    
+    public function redirigerWhatsApp($id)
+    {
+        try {
+            // Validation de l'ID comme étant numérique
+            if (!is_numeric($id)) {
+                throw new Exception('L\'ID doit être numérique.');
+            }
+
+            $annonce = Annonce::findOrFail($id);
+            $numeroWhatsApp = $annonce->user->telephone;
+            $urlWhatsApp = "https://api.whatsapp.com/send?phone=$numeroWhatsApp";
+
+            return $urlWhatsApp;
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('whatsapp'); // Utilisez le bon nom de route
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }
