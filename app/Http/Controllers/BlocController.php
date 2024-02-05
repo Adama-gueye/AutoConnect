@@ -160,9 +160,6 @@ class BlocController extends Controller
      *     path="/api/blocShow{id}",
      *     summary="Obtenir les détails d'un bloc spécifique",
      *     tags={"Blocs"},
-     *     security={
-     *         {"bearerAuth": {}}
-     *     },
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
