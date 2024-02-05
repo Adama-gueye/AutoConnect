@@ -120,7 +120,12 @@ class CompteController extends Controller
         $user->telephone = $request->telephone;
         $user->description = $request->description;
         $user->adresse = $request->adresse;
-        $user->image = $request->image;
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('images'), $filename);
+            $user['image']= $filename;
+        }
         $user->role = $request->role;
         if($request->password!==$request->confirmation){
             return response()->json('mot de passe non identique');
