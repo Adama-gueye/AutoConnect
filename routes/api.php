@@ -54,7 +54,6 @@ Route::get('/annoncesMisesEnAvantParCategorie', [AnnonceController::class, 'anno
 Route::post('/messageStore', [MessageController::class, 'store']);
 Route::get('/blocShow{id}', [BlocController::class, 'show']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
-Route::get('/proprietaireShow{id}', [CompteController::class, 'show']);
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
@@ -101,5 +100,6 @@ Route::middleware(['auth:api', 'role:proprietaire'])->group(function () {
     Route::get('/annonceUserValides', [AnnonceController::class, 'annonceUserValide']);
     Route::get('/annonceUserInvalides', [AnnonceController::class, 'annonceUserInvalide']);
     Route::get('/signalementProprietaire', [SignalementController::class, 'signalementProp']);
+    Route::get('/proprietaireShow{id}', [CompteController::class, 'show']);
     Route::patch('/proprietaireUpdate{id}', [CompteController::class, 'update']);
 });

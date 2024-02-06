@@ -504,7 +504,7 @@ class AnnonceController extends Controller
     {
         
         $annonce = Annonce::find($id);
-        $user = Auth::user();
+        // $user = Auth::user();
         if (!$annonce) {
             return response()->json('Annonce non trouvé', 404);
         }
