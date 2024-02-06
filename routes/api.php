@@ -55,6 +55,8 @@ Route::post('/messageStore', [MessageController::class, 'store']);
 Route::get('/blocShow{id}', [BlocController::class, 'show']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
 Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
+Route::get('/commentaires', [CommentaireController::class, 'index']);
+
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
@@ -70,7 +72,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::patch('/blocUpdate{id}', [BlocController::class, 'update']);
     Route::delete('/blocDestroy{id}', [BlocController::class, 'destroy']);
     Route::get('/messages', [MessageController::class, 'index']);
-    Route::get('/commentaires', [CommentaireController::class, 'index']);
     Route::get('/newsLetters', [NewsLetterController::class, 'index']);
     Route::delete('/messageDestroy{id}', [MessageController::class, 'destroy']);
     Route::delete('/commentaireDestroy{id}', [CommentaireController::class, 'destroy']);
