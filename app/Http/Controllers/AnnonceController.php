@@ -508,7 +508,8 @@ class AnnonceController extends Controller
         if (!$annonce) {
             return response()->json('Annonce non trouvé', 404);
         }
-        return response()->json(compact('annonce'), 200);
+        $commentaires = Commentaire::where('annonce_id', $id)->get();
+        return response()->json(compact('annonce','commentaires'), 200);
     }
 
     /**
