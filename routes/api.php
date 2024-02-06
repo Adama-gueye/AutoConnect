@@ -54,6 +54,7 @@ Route::get('/annoncesMisesEnAvantParCategorie', [AnnonceController::class, 'anno
 Route::post('/messageStore', [MessageController::class, 'store']);
 Route::get('/blocShow{id}', [BlocController::class, 'show']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
+Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
@@ -76,7 +77,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::delete('/newsLetterDestroy{id}', [NewsLetterController::class, 'destroy']);
     Route::delete('/signalementDestroy{id}', [SignalementController::class, 'destroy']);
     Route::get('/signalements', [SignalementController::class, 'index']);
-    Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
     Route::get('/listeAcheteur', [CompteController::class, 'listeAcheteur']);
     Route::delete('/userDestroy{id}', [CompteController::class, 'destroy']);
     Route::delete('/annonceDestroyAdmin{id}', [AnnonceController::class, 'destroyAdmin']);
