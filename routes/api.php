@@ -55,7 +55,9 @@ Route::post('/messageStore', [MessageController::class, 'store']);
 Route::get('/blocShow{id}', [BlocController::class, 'show']);
 Route::get('/annonceDetail{id}', [AnnonceController::class, 'detail']);
 Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire']);
+Route::get('/listeUtilisateur', [CompteController::class, 'users']);
 Route::get('/commentaires', [CommentaireController::class, 'index']);
+
 
 
 

@@ -65,6 +65,27 @@ class CompteController extends Controller
         return response()->json(compact('acheteur'), 200);
     }
 
+     /**
+     * @OA\Get(
+     *     path="/api/listeUtilisateur",
+     *     summary="Obtenir une liste de tous les utilisateurs",
+     *     tags={"Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="array", @OA\Items(ref="#/components/schemas/User"))
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Non autorisé")
+     * )
+     */
+
+     public function users() {
+        $users = User::all();
+        return response()->json(compact('users'), 200);
+    }
+
 
     /**
      * @OA\Post(
@@ -193,6 +214,7 @@ class CompteController extends Controller
                 'prenom' => 'required|string',
                 'telephone' => 'required|string',
                 'adresse' => 'required|string',
+                'image' => 'required|string',
                 'email' => 'required|email',
                 'password' => 'nullable|string|min:6',
                 'confirmation' => 'nullable|string', 
