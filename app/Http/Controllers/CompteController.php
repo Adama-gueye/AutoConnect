@@ -208,24 +208,23 @@ class CompteController extends Controller
             return response()->json('Utilisateur non trouvé', 404);
         }elseif($user->id !== $utilisateur->id){
             return response()->json('impossible de modifier');
-        }else{
-            $validator = Validator::make($request->all(), [
-                'nom' => 'required|string',
-                'prenom' => 'required|string',
-                'telephone' => 'required|string',
-                'adresse' => 'required|string',
-                'image' => 'required|string',
-                'email' => 'required|email',
-                'password' => 'nullable|string|min:6',
-                'confirmation' => 'nullable|string', 
-               ]);
-            if ($validator->fails()) {
-                return response()->json(['message' => $validator->errors()], 401);
-            }
+        }
+        // else{
+        //     $validator = Validator::make($request->all(), [
+        //         'nom' => 'required|string',
+        //         'prenom' => 'required|string',
+        //         'telephone' => 'required|string',
+        //         'adresse' => 'required|string',
+        //         'image' => 'required|string',
+        //         'email' => 'required|email',
+        //        ]);
+        //     if ($validator->fails()) {
+        //         return response()->json(['message' => $validator->errors()], 401);
+        //     }
+       
             $utilisateur->nom = $request->nom;
             $utilisateur->prenom = $request->prenom;
             $utilisateur->email = $request->email;
-            $utilisateur->password = bcrypt($request->password);
             $utilisateur->telephone = $request->telephone;
             $utilisateur->description = $request->description;
             $utilisateur->adresse = $request->adresse;
@@ -235,14 +234,11 @@ class CompteController extends Controller
                 $file-> move(public_path('images'), $filename);
                 $utilisateur['image']= $filename;
             }
-            $utilisateur->role = $request->role;
-            if($request->password!==$request->confirmation){
-                return response()->json('mot de passe non identique');
-            }
+            $utilisateur->role = $user->role;
             $utilisateur->save();
-            return response()->json(['message' => 'Compte créé avec succès', 'user' => $utilisateur], 201);
-        }
-   }
+            return response()->json(['message' => 'Votre profil a été avec succès', 'user' => $utilisateur], 201);
+    }
+   
 
 
     /**
