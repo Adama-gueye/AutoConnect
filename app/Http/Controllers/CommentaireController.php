@@ -85,7 +85,6 @@ class CommentaireController extends Controller
 
         $user = Auth::user();
         $annonce = Annonce::find($id);
-
         $commentaire = new Commentaire([
             'commentaire' => $request->input('commentaire'),
             'user_id' => $user->id,

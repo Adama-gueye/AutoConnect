@@ -58,9 +58,6 @@ Route::get('/listeProprietaire', [CompteController::class, 'listeProprietaire'])
 Route::get('/listeUtilisateur', [CompteController::class, 'users']);
 Route::get('/commentaires', [CommentaireController::class, 'index']);
 
-
-
-
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/annonceInvalides', [AnnonceController::class, 'annonceInvalides']);
     Route::get('/annonceValidesByAdmin', [AnnonceController::class, 'annonceValides']);
@@ -85,6 +82,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::delete('/annonceDestroyAdmin{id}', [AnnonceController::class, 'destroyAdmin']);
     Route::get('/userShow{id}', [CompteController::class, 'show']);
     Route::get('/messageShow{id}', [MessageController::class, 'show']);
+    Route::get('/annonceShowAdmin{id}', [AnnonceController::class, 'show']);//
     //desactiver un utilisateur, activer un utiliser
 });
 Route::middleware(['auth:api', 'role:acheteur'])->group(function () {

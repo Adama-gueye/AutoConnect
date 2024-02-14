@@ -50,9 +50,6 @@ class MessageController extends Controller
      *     path="/api/messageStore",
      *     summary="Ajouter un nouveau message",
      *     tags={"Messages"},
-     *     security={
-     *         {"bearerAuth": {}}
-     *     },
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -69,21 +66,24 @@ class MessageController extends Controller
      * )*/
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'message' => 'required|string',
-        //     'nomComplet' => 'required|string',
-        //     'email' => 'required|string',
-        // ]);
+        $request->validate([
+            'message' => 'required|string',
+            'nomComplet' => 'required|string',
+            'email' => 'required|email',
+        ], [
+            'nomComplet.required' => 'Le champ nom est obligatoire.',
+            'email.required' => 'Le champ email est obligatoire.',
+            'email.email' => 'Veuillez saisir une adresse email valide.',
+        ]);        
 
-
+        $user = Auth::user();
         $message = new Message([
             'message' => $request->input('message'),
-            'email' => $request->input('email'),
-            'nomComplet' => $request->input('nomComplet'),
+            'email' => $user ? $user->email : $request->input('email'),
+            'nomComplet' => $user ? $user->prenom . ' ' . $user->nom : $request->input('nomComplet'),
+            'user_id' => $user ? $user->id : '',
         ]);
-
         $message->save();
-
         return response()->json('Message enregistré avec succès, nous vous enverrons un email pour la réponse', 201);
     }
 

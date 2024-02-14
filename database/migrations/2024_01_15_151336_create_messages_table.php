@@ -16,8 +16,11 @@ return new class extends Migration
             $table->text("message");
             $table->string("email");
             $table->string("nomComplet");
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();
         });
+        
     }
 
     /**
