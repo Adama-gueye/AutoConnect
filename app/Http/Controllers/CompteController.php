@@ -120,18 +120,19 @@ class CompteController extends Controller
    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nom' => 'required|string',
-            'prenom' => 'required|string',
-            'telephone' => 'required|string',
+            'nom' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'prenom' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'telephone' => 'required|string|regex:/^(77|78|70|75)\d{7}$/',
             'adresse' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
-            'confirmation' => 'required|string',
+            'confirmation' => 'required|string|same:password',
         ]);
-
+        
+        
         if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 401);
-        }
+            return response()->json(['message' => $validator->errors()], 422);
+        }        
 
         $user = new User();
         $user->nom = $request->nom;
@@ -204,23 +205,23 @@ class CompteController extends Controller
         $utilisateur = User::find($id);
         $user = Auth::user();
 
+
         if (!$utilisateur) {
             return response()->json('Utilisateur non trouvé', 404);
         }elseif($user->id !== $utilisateur->id){
             return response()->json('impossible de modifier');
         }
-        // else{
-        //     $validator = Validator::make($request->all(), [
-        //         'nom' => 'required|string',
-        //         'prenom' => 'required|string',
-        //         'telephone' => 'required|string',
-        //         'adresse' => 'required|string',
-        //         'image' => 'required|string',
-        //         'email' => 'required|email',
-        //        ]);
-        //     if ($validator->fails()) {
-        //         return response()->json(['message' => $validator->errors()], 401);
-        //     }
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'prenom' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'telephone' => 'required|string|regex:/^(77|78|70|75)\d{7}$/',
+            'adresse' => 'required|string',
+            'email' => 'required|email|unique:users',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        } 
        
             $utilisateur->nom = $request->nom;
             $utilisateur->prenom = $request->prenom;

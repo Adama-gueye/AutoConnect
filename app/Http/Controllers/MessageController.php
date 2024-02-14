@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 /**
  * @OA\Tag(
  *     name="Messages",
@@ -66,7 +68,7 @@ class MessageController extends Controller
      * )*/
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'message' => 'required|string',
             'nomComplet' => 'required|string',
             'email' => 'required|email',
@@ -76,6 +78,9 @@ class MessageController extends Controller
             'email.email' => 'Veuillez saisir une adresse email valide.',
         ]);        
 
+         if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 422);
+        }
         $user = Auth::user();
         $message = new Message([
             'message' => $request->input('message'),
