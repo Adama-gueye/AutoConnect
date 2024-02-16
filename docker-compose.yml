@@ -3,12 +3,14 @@ services:
     # Mysql database container
     db:
         image: mysql
-        container_name: autoconnect_mysql
+        container_name: autoconnect_db
         restart: always
         volumes:
             - db-data:/var/lib/mysql
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        ports:
+            - '3306'
         networks:
             - tutorial
 
@@ -29,12 +31,12 @@ services:
     # laravel apache project container
     www:
         build: docker/php
-        container_name: autoconnect_project
+        container_name: autoconnect_app
         ports:
           - "8741:80"
         volumes:
             - ./docker/php/vhosts:/etc/apache2/sites-enabled
-            - ./:/var/www
+            - ./:/var/www/html
         restart: always
         networks:
             - tutorial

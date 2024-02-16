@@ -122,7 +122,7 @@ class CompteController extends Controller
         $validator = Validator::make($request->all(), [
             'nom' => 'required|regex:/^[a-zA-Z\s]+$/',
             'prenom' => 'required|regex:/^[a-zA-Z\s]+$/',
-            'telephone' => 'required|string|regex:/^(77|78|70|75)\d{7}$/',
+            'telephone' => ['required', 'string', 'regex:/^(77|76|75|78|33)[0-9]{7}$/','unique:users'],
             'adresse' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
