@@ -83,7 +83,7 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/userShow{id}', [CompteController::class, 'show']);
     Route::get('/messageShow{id}', [MessageController::class, 'show']);
     Route::get('/annonceShowAdmin{id}', [AnnonceController::class, 'show']);//
-    //desactiver un utilisateur, activer un utiliser
+    Route::patch('/categorieSupprimer{id}', [CategorieController::class, 'suppressionSimple']);//
 });
 Route::middleware(['auth:api', 'role:acheteur'])->group(function () {
     Route::post('/commentaireStore{id}', [CommentaireController::class, 'store']);

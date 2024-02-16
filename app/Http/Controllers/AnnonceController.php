@@ -44,8 +44,16 @@ class AnnonceController extends Controller
      */
     public function annonceValides()
     {
+        $annonces = [];
+        $categorie = Categorie::all();
         $annonceValides = Annonce::all()->where('etat', "accepter");
-        return response()->json(compact('annonceValides'), 200);
+        foreach ($annonceValides as $annonceValide) {
+            if($annonceValide->categorie->etat !== "sup"){
+                $annonces[]= $annonceValide;
+            }
+        }
+        return response()->json(compact('annonces'), 200);
+
     }
 
      /**
@@ -69,8 +77,15 @@ class AnnonceController extends Controller
 
      public function annonceInvalides()
     {
+        $annonces = [];
+        $categorie = Categorie::all();
         $annonceInvalides = Annonce::all()->where('etat', "refuser");
-        return response()->json(compact('annonceInvalides'), 200);
+        foreach ($annonceInvalides as $annonceInvalide) {
+            if($annonceInvalide->categorie->etat !== "nSup"){
+                $annonces[]= $annonceInvalide;
+            }
+        }
+        return response()->json(compact('annonces'), 200);
     }
 
     /**
@@ -171,8 +186,16 @@ class AnnonceController extends Controller
     public function annonceUserValide() 
     {
         $user = Auth::user();
+        $annonces = [];
+        $categorie = Categorie::all();
+        $categorie = Categorie::all();
         $annonceUserValides = Annonce::where('user_id', $user->id)->where('etat', "accepter")->get();
-        return response()->json(compact('annonceUserValides'), 200); 
+        foreach ($annonceUserValides as $annonceUserValide) {
+            if($annonceUserValide->categorie->etat !== "sup"){
+                $annonces[]= $annonceUserValide;
+            }
+        }
+        return response()->json(compact('annonces'), 200); 
      
     }
     /**
@@ -197,8 +220,15 @@ class AnnonceController extends Controller
     public function annonceUserInvalide() 
     {
         $user = Auth::user();
+        $annonces = [];
+        $categorie = Categorie::all();
         $annonceUserInvalides = Annonce::where('user_id', $user->id)->where('etat', "refuser")->get();
-        return response()->json(compact('annonceUserInvalides'), 200);  
+        foreach ($annonceUserInvalides as $annonceUserInvalide) {
+            if($annonceUserInvalide->categorie->etat !== "sup"){
+                $annonces[]= $annonceUserInvalide;
+            }
+        }
+        return response()->json(compact('annonces'), 200); 
     }
 
 
@@ -227,19 +257,19 @@ class AnnonceController extends Controller
 
     public function annoncesParCategorie($id)
     {
-    $categorie = Categorie::find($id);
+        $categorie = Categorie::find($id);
 
-    if (!$categorie) {
-        return response()->json("Catégorie non trouvée", 200);
-    }
+        if (!$categorie) {
+            return response()->json("Catégorie non trouvée", 200);
+        }
+        if($categorie->etat !== "sup")
+        {
+            $annonces = $categorie->annonces;
+        }else{
+            return response()->json("Aucune annonce trouvée avec cette catégorie", 200);
+        }
 
-    $annonces = $categorie->annonces;
-
-    if ($annonces->isEmpty()) {
-        return response()->json("Aucune annonce trouvée avec cette catégorie", 200);
-    }
-
-    return response()->json(compact('annonces'), 200);
+        return response()->json(compact('annonces'), 200);
     }
 
     /**

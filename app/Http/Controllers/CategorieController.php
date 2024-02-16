@@ -203,12 +203,64 @@ class CategorieController extends Controller
      *     @OA\Response(response=404, description="Catégorie non trouvée")
      * )
      */
+
     public function destroy($id)
     {
         $categorie = Categorie::find($id);
         if ($categorie) {
             $categorie->delete();
+            return response()->json("Catégorie supprimée complétement avec succès", 200);
+        } else {
+            return response()->json("Catégorie non trouvée");
+        }
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/categorieSupprimer{id}",
+     *     summary="Supprimer une catégorie spécifique",
+     *     tags={"Catégories"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la catégorie à supprimer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Supprimé avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Non autorisé"),
+     *     @OA\Response(response=404, description="Catégorie non trouvée")
+     * )
+     */
+
+    public function suppressionSimple($id)
+    {
+        $categorie = Categorie::find($id);
+        if ($categorie) {
+            $categorie->etat = "sup";
+            $categorie->save();
             return response()->json("Catégorie supprimée avec succès", 200);
+        } else {
+            return response()->json("Catégorie non trouvée");
+        }
+    }
+
+    public function restaurer($id)
+    {
+        $categorie = Categorie::find($id);
+        if ($categorie) {
+            $categorie->etat = "nSup";
+            $categorie->save();
+            return response()->json("Catégorie restaurée avec succès", 200);
         } else {
             return response()->json("Catégorie non trouvée");
         }
