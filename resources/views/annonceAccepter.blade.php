@@ -25,13 +25,13 @@
             <div class="d-flex justify-content-between align-content-center">
                 <p>
                     !!! 🎉 YOUPIII 🎉 !!! <br>
-                    De nouvelles annonces on été publiées ! <br>
-                    Veuillez vite jeter un coup d'oeil ca pourrait <br>
-                    correspondre à votre besoin 😍.
+                    Votre annonce a été accpeter avec succes ! <br>
+                    maintenant Veuillez cliquer sur le lien <br>
+                    ci-dessous pour voir votre annonce sur la plateforme 😍.
                 </p>
                 <img src="images/202401312158img2.jpg" alt="" height="100" width="300">
             </div>
-            <a href="http://localhost:4200/vehicules" class="btn btn-primary w-25" >Voir les résultats</a>
+            <a href="http://localhost:4200/vehicules" class="btn btn-primary w-25" >Voir annonce</a>
 
             
 
