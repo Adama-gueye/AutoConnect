@@ -37,22 +37,21 @@
             <h1 style="color: white;">AUTOCONNECT</h1>
         </div>
         <div class="mt-2" style="text-align: center;">
-            <img src="https://media.istockphoto.com/id/1221473473/nl/foto/koper-van-auto-die-handen-met-verkoper-in-autohandel-schudt-mening-van-binnenland-van-auto.jpg?s=612x612&w=0&k=20&c=GGnhGLvqmKZUjVNwaBs578X_DKBl8E3s2XfmFNBeWUo=" height="300" width="1000">
+            <img src="https://static.latribune.fr/schema_org/1290220/business.jpg" height="300" width="1000">
         </div>
+
         <div>
-            <h5>Chére/Cher Client(e)</h5>
-            <div class="d-flex justify-content-between align-content-center">
-                <p>
-                    !!! 🎉 YOUPIII 🎉 !!! <br>
-                    De nouvelles annonces on été publiées ! <br>
-                    Veuillez vite jeter un coup d'oeil ca pourrait <br>
-                    correspondre à votre besoin 😍.
-                </p>
-                <img src="https://media.istockphoto.com/id/1222996765/nl/foto/sluit-omhoog-van-handelaar-die-sleutel-geeft-aan-nieuwe-eigenaar-en-handen-schudt-in-autotoont.jpg?s=612x612&w=0&k=20&c=5Zt3AJLvnrUa0HwlT7Xv_XlioQywt06DNUNIaaplyCk=" alt="" height="100" width="300">
-            </div>
-            <a href="http://localhost:4200/vehicules" class="btn btn-primary w-25" >Voir les résultats</a>
+            <div style="text-align: center;" class="mt-5">
+                <h5>Chére/Cher Client(e)</h5>
+                    <p>
+                        !!! 🎉 YOUPIII 🎉 !!! <br>
+                        De nouvelles annonces on été publiées ! <br>
+                        Veuillez vite jeter un coup d'oeil ca pourrait <br>
+                        correspondre à votre besoin 😍.
+                    </p>
+                    <img src="https://media.istockphoto.com/id/1222996765/nl/foto/sluit-omhoog-van-handelaar-die-sleutel-geeft-aan-nieuwe-eigenaar-en-handen-schudt-in-autotoont.jpg?s=612x612&w=0&k=20&c=5Zt3AJLvnrUa0HwlT7Xv_XlioQywt06DNUNIaaplyCk=" alt="" height="100" width="300">
+                <a href="http://localhost:4200/vehicules" class="btn btn-primary w-25" >Accéder à la plateforme</a>
+            </div> 
         </div>
-        
-    </div>
 </body>
 </html>
