@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string("image");
             $table->integer("prix");
             $table->text("description");
-            $table->integer("nbrePlace")->nullable();
+            $table->string("nbrePlace")->nullable();
             $table->string("localisation");
             $table->string("moteur");
-            $table->integer("annee");
+            $table->string("annee");
             $table->string("carburant");
             $table->string("kilometrage");
             $table->string("carosserie")->nullable();
