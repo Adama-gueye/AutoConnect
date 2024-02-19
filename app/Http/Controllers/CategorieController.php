@@ -51,7 +51,7 @@ class CategorieController extends Controller
     public function rules()
     {
         return [
-            'nom' => 'required',
+            'nom' => 'required|regex:/^[a-z\s]+$/',
         ];
     }
     

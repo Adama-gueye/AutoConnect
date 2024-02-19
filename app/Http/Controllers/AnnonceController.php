@@ -289,13 +289,20 @@ class AnnonceController extends Controller
     public function annoncesMisesEnAvantParCategorie()
     {
         $categories = Categorie::all();
+        $cats = [];
+
+        foreach ($categories as $categorie) {
+            if($categorie->etat !== "sup"){
+                $cats[] = $categorie;
+            }
+        }
 
         $annoncesMisesEnAvant = [];
 
-        foreach ($categories as $categorie) {
-            $annonces = $categorie->annonces()->where('etat', 'accepter')->take(3)->get();
+        foreach ($cats as $cat) {
+            $annonces = $cat->annonces()->where('etat', 'accepter')->take(3)->get();
 
-            $annoncesMisesEnAvant[$categorie->nom] = $annonces;
+            $annoncesMisesEnAvant[$cat->nom] = $annonces;
         }
 
         return response()->json(compact('annoncesMisesEnAvant'), 200);
