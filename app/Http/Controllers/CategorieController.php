@@ -36,7 +36,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        $categories = Categorie::all();
+        $categories = Categorie::where('etat','nSup');
         return response()->json(compact('categories'), 200);
     }
 
@@ -214,7 +214,6 @@ class CategorieController extends Controller
             return response()->json("Catégorie non trouvée");
         }
     }
-
     /**
      * @OA\Delete(
      *     path="/api/categorieSupprimer{id}",
@@ -254,6 +253,30 @@ class CategorieController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/listeCategorieSupprimer",
+     *     summary="Obtenir la liste de toutes les catégories supprimer",
+     *     tags={"Catégories"},
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     *     @OA\Response(
+     *         response=200,
+     *         description="Opération réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="categories", type="array", @OA\Items(ref="#/components/schemas/Categorie"))
+     *         )
+     *     ),
+     * 
+     *     @OA\Response(response=401, description="Non autorisé")
+     * )
+     */
+    public function listeCategorieSupprimer(){
+        $categories = Categorie::where('etat','sup')->all();
+        return response()->json(compact('categories'), 200);
+    }
+
     public function restaurer($id)
     {
         $categorie = Categorie::find($id);
@@ -266,3 +289,4 @@ class CategorieController extends Controller
         }
     }
 }
+

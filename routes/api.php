@@ -84,6 +84,8 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::get('/messageShow{id}', [MessageController::class, 'show']);
     Route::get('/annonceShowAdmin{id}', [AnnonceController::class, 'show']);//
     Route::patch('/categorieSupprimer{id}', [CategorieController::class, 'suppressionSimple']);//
+    Route::get('/listeCategorieSupprimer', [CategorieController::class, 'listeCategorieSupprimer']);//
+    Route::patch('/categorieRestaurer{id}', [CategorieController::class, 'restaurer']);//
 });
 Route::middleware(['auth:api', 'role:acheteur'])->group(function () {
     Route::post('/commentaireStore{id}', [CommentaireController::class, 'store']);
