@@ -146,7 +146,7 @@ class AnnonceController extends Controller
                         'title' => 'Annonce acceptée',
                         'body' => 'Félicitations ! Votre annonce a été acceptée.',
                     ];
-                    Mail::to($userClient->email)->send(new AnnonceAccepter($ccAnnonce),compact($annonce));
+                    Mail::to($userClient->email)->send(new AnnonceAccepter($ccAnnonce));
                 }
             }
 
