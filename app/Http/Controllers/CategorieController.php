@@ -88,9 +88,13 @@ class CategorieController extends Controller
     {
         $request->validate($this->rules(), $this->messages());
         $categorie = new Categorie();
+        $categories = Categorie::where('etat','nSup');
+        foreach ($categories as $cat) {
+            if($cat->nom===$request->nom)
+                return response()->json("Désolé ce categorie existe déja",404);
+        }
         $categorie->nom = $request->nom;
         $categorie->save();
-
         return response()->json("Catégorie enregistrée avec succès", 201);
     }
 
