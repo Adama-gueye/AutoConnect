@@ -36,7 +36,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        $categories = Categorie::where('etat','nSup');
+        $categories = Categorie::all()->where('etat','nSup');
         return response()->json(compact('categories'), 200);
     }
 
@@ -87,16 +87,20 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules(), $this->messages());
-        $categorie = new Categorie();
-        $categories = Categorie::where('etat','nSup');
-        foreach ($categories as $cat) {
-            if($cat->nom===$request->nom)
-                return response()->json("Désolé ce categorie existe déja",404);
+        
+        $existingCategory = Categorie::where('nom', $request->nom)->where('etat', 'nSup')->first();
+
+        if ($existingCategory !== null) {
+            return response()->json("Désolé, cette catégorie existe déjà", 404);
         }
+
+        $categorie = new Categorie();
         $categorie->nom = $request->nom;
         $categorie->save();
+
         return response()->json("Catégorie enregistrée avec succès", 201);
     }
+
 
     /**
      * @OA\Get(
@@ -277,7 +281,7 @@ class CategorieController extends Controller
      * )
      */
     public function listeCategorieSupprimer(){
-        $categories = Categorie::where('etat','sup')->all();
+        $categories = Categorie::all()->where('etat','sup');
         return response()->json(compact('categories'), 200);
     }
 
